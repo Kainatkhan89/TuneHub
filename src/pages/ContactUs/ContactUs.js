@@ -11,7 +11,7 @@ function AboutUs() {
     return (
         isMobile ?
             <Flex justifyContent="start" alignItems="center" minH="100vh" backgroundColor="#000C66" direction="column">
-                <Heading as="h1" size="3xl" fontWeight="bold" ml="30px" mt="32px" mb="64px" color="white">
+                <Heading as="h1" size="2xl" fontWeight="medium" ml="30px" mt="32px" mb="64px" color="white">
                     About Us
                 </Heading>
                 <Grid templateColumns="repeat(1, 1fr)" gap={6} placeItems="center" ml="30px" mr="20px" color="white">
@@ -56,9 +56,9 @@ function AboutUs() {
             </Flex>
             :
             <Flex justifyContent="start" alignItems="center" minH="90vh" backgroundColor="#000C66" direction="column">
-                <Heading as="h1" size="3xl" fontWeight="bold" ml="30px" mt="32px" mb="64px" color="white">
+                <Text as="h1" fontSize="5xl" fontWeight="medium" ml="30px" mt="32px" mb="64px" color="white">
                     About Us
-                </Heading>
+                </Text>
                 <Grid templateColumns="repeat(4, 1fr)" gap={6} placeItems="center" ml="30px" mr="20px" color="white">
                     <GridItem colSpan={1}>
                         <Heading size="lg" mb="10px"> OUR MISSION </Heading>
