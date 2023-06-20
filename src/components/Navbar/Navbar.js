@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 function NavBar() {
 
   return (
-    <Flex as="nav" alignItems="center" justify="space-between" h="80px" w="100%" backgroundColor="#050A30">
+    <Flex as="nav" alignItems="center" justify="space-between" h="10vh" w="100%" backgroundColor="#050A30">
       {/* Logo */}
       <NavLink to="/">
         <Box padding="16px 24px">
@@ -29,7 +29,7 @@ function NavBar() {
         </Box>
         {/* About Us */}
         <Box>
-        <NavLink to='/'>
+        <NavLink to='/about-us'>
             <Text fontWeight="medium" color="white">About Us</Text>
           </NavLink>
         </Box>
