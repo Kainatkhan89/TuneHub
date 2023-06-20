@@ -1,8 +1,8 @@
-import { Box, Button, Flex, HStack, Text, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, IconButton, useDisclosure, VStack } from '@chakra-ui/react';
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, IconButton, Text, VStack, useDisclosure } from '@chakra-ui/react';
+import React from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { NavLink } from 'react-router-dom';
 
 
 function NavBar() {
