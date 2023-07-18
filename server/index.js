@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 
 const userRoute = require('./routes/users.js');
+const adminRoute = require('./routes/admin.js');
 
 const app = express();
 dotenv.config();
@@ -28,7 +29,7 @@ async function connect()
 {
     try
     {
-        await mongoose.connect(uri);
+        await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
         console.log("Connected to MongoDB");
     }
     catch(err)
@@ -38,10 +39,12 @@ async function connect()
 }
 
 connect();
+// const connection = mongoose.connection;
+// module.exports = connection;
 
 // specify /test for specific routes
-app.use('/', userRoute);
-
+//app.use('/', userRoute);
+app.use('/', adminRoute);
 //Server PORT number
 
 
