@@ -1,25 +1,34 @@
 const mongoose = require('mongoose');
 
+const uuid = require('uuid'); 
+
+const Review = require('../models/reviewModel.js');
+
 const songSchema = new mongoose.Schema({
-  id: { type: Number },
-  name: { type: String, required: true },
-  artist:[{ type: Number, required: true }],
-  duration: { type: String, required: true },
-  genres : [{type:String}],
-  releaseYear : {type: Number},
+  id: { type: String },
+  name: { type: String },
+  artist: [{ type: Number }],
+  duration: { type: String },
+  genres: [{ type: String }],
+  releaseYear: { type: Number },
+  reviews: { type : [Review.schema], default : []},
 });
 
 songSchema.pre('save', async function (next) {
-    try {
-      // Get the last song entry
-      const lastSong = await this.constructor.findOne({}, {}, { sort: { id: -1 } });
-      // Set the new ID value
-      this.id = lastSong ? lastSong.id + 1 : 1;
-      next();
-    } catch (error) {
-      next(error);
+  try {
+    const generatedId = uuid.v4();
+    
+    if (!this.id) {
+      this.id = uuid.v4(); // Generate a UUID only if the id field is not already set
     }
-  });
+
+    next();
+
+  }
+  catch (error) {
+    next(error);
+  }
+});
 
 const Song = mongoose.model('Song', songSchema, 'Song');
 

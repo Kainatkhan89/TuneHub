@@ -4,8 +4,8 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
 
-const userRoute = require('./routes/users.js');
 const adminRoute = require('./routes/admin.js');
+const reviewRoute = require('./routes/review.js');
 
 const app = express();
 dotenv.config();
@@ -45,6 +45,7 @@ connect();
 // specify /test for specific routes
 //app.use('/', userRoute);
 app.use('/', adminRoute);
+app.use('/review', reviewRoute);
 //Server PORT number
 
 

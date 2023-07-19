@@ -1,10 +1,11 @@
 const Song = require('../models/songModel.js')
+const Review = require('../models/reviewModel.js');
 
 exports.addSong = async (req, res) => {
     try {
-        const { id, name, artist, duration, genres, releaseYear } = req.body;
+        const { id, name, artist, duration, genres, releaseYear, reviews } = req.body;
         if (name == null || artist == null || duration == null ||
-            name.trim() === '' || artist.trim() === '' || duration.trim() === '') {
+            name.trim() === '' || artist.length === 0 || duration.trim() === '') {
             return res.status(422).json({ error: "Invalid or empty input data" });
         }
 
@@ -15,6 +16,7 @@ exports.addSong = async (req, res) => {
             duration,
             genres,
             releaseYear,
+            reviews,
         })
 
         const addedSong = await newSong.save();
@@ -48,7 +50,6 @@ exports.updateSong = async (req, res) => {
         return res.status(422).json({ error: 'Improper input has been given' });
     }
     try {
-        //console.log(updatedData);
         await Song.updateOne({ id: songId }, updatedData);
         return res.status(200).json({ message: "Song updated successfully" });
     }
