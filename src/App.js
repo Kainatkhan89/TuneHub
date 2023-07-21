@@ -11,6 +11,8 @@ import FAQ from './pages/FAQ/FAQ';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LayoutWithNav from './pages/Layout/LayoutWithNav';
 import LayoutWithoutNav from './pages/Layout/LayoutWithoutNav';
+import Quiz from './pages/Trivia/quiz';
+import Leaderboard from './pages/Trivia/Leaderboard';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
       {
         path:"/contact-us",
         element: <ContactUs/>
+      },
+      {
+        path:"/quiz",
+        element: <Quiz/>
+      },
+      {
+        path:"/leaderboard",
+        element: <Leaderboard/>
       }
     ]
   },
