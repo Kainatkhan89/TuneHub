@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const adminRoute = require('./routes/admin.js');
 const reviewRoute = require('./routes/review.js');
+const artistRoute = require('./routes/artist.js');
 
 const app = express();
 dotenv.config();
@@ -46,6 +47,7 @@ connect();
 //app.use('/', userRoute);
 app.use('/', adminRoute);
 app.use('/review', reviewRoute);
+app.use('/artist', artistRoute);
 //Server PORT number
 
 

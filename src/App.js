@@ -9,6 +9,7 @@ import ContactUs from './pages/ContactUs/ContactUs';
 import AboutUs from './pages/ContactUs/AboutUs';
 import FAQ from './pages/FAQ/FAQ';
 import LandingPage from './pages/LandingPage/LandingPage';
+import AdminPage from './pages/Admin/Admin';
 import LayoutWithNav from './pages/Layout/LayoutWithNav';
 import LayoutWithoutNav from './pages/Layout/LayoutWithoutNav';
 
@@ -17,8 +18,10 @@ const router = createBrowserRouter([
     element: <LayoutWithNav />,
     children: [
       {
+        // Change this path back to the Admin page
         path: "/",
-        element: <LandingPage />
+        //element: <LandingPage />
+        element: <AdminPage />
       },
       {
         path: "/faq",
