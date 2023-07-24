@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem, Heading, Image, ListItem, Text, UnorderedList } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 

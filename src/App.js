@@ -13,6 +13,7 @@ import LayoutWithNav from './pages/Layout/LayoutWithNav';
 import LayoutWithoutNav from './pages/Layout/LayoutWithoutNav';
 import Quiz from './pages/Trivia/quiz';
 import Leaderboard from './pages/Trivia/Leaderboard';
+import SpotifyContainer from './pages/SpotifyIntegration/SpotifyContainer';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path:"/leaderboard",
         element: <Leaderboard/>
+      },
+      {
+        path: "/spotify",
+        element: <SpotifyContainer />
       }
     ]
   },
