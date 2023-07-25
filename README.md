@@ -12,7 +12,7 @@
 * [Harsh Pranav Patel](hr979846@dal.ca) - *(Developer)*
 * [Preeti Sharma](pr233584@dal.ca) - *(Developer)*
 * [Dev Patel](dev.patel@dal.ca) - *(Developer)*
-* [Kainat Khan](kainat@dal.ca) - *(Developer)*
+* [Kainat Khan](Kainat@dal.ca) - *(Developer)*
 * [Vishwa Pankajbhai Parmar](vs623903@dal.ca) - *(Developer)*
 
 ## Deployment
@@ -21,7 +21,7 @@ Deployed on Netlify using a clone repository from GitHub.
 
 ## Built With
 
- * [React JS](https://react.dev/) - The web framework used
+* [React JS](https://react.dev/) - The web framework used
 * [Node](https://nodejs.org/en) - Dependency Management
 * [Chakra UI](https://chakra-ui.com/) - Predefined React Components
 

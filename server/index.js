@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 const adminRoute = require('./routes/admin.js');
 const reviewRoute = require('./routes/review.js');
 const quizRoute = require('./routes/quiz.js')
-const leaderboard = require('./routes/leaderboard')
+const leaderboard = require('./routes/leaderboard');
+const userRoute = require('./routes/users.js');
 
 const app = express();
 dotenv.config();
@@ -49,7 +50,8 @@ connect();
 app.use('/', adminRoute);
 app.use('/review', reviewRoute);
 app.use('/trivia',quizRoute)
-app.use('/leaderboard',leaderboard)
+app.use('/leaderboard',leaderboard);
+app.use('/users',userRoute);
 //Server PORT number
 
 
