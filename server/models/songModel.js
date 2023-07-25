@@ -7,7 +7,7 @@ const Review = require('../models/reviewModel.js');
 const songSchema = new mongoose.Schema({
   id: { type: String },
   name: { type: String },
-  artist: [{ type: Number }],
+  artist: [{ type: String }],
   duration: { type: String },
   genres: [{ type: String }],
   releaseYear: { type: Number },
