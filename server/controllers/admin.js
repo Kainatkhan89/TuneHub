@@ -18,7 +18,7 @@ exports.addSong = async (req, res) => {
             releaseYear,
             reviews,
         })
-
+        console.log(newSong);
         const addedSong = await newSong.save();
 
         return res.status(201).json(addedSong);
@@ -65,11 +65,10 @@ exports.deleteSong = async (req, res) => {
     }
     try {
         await Song.deleteOne({ id: songId });
+        console.log("Inside delete");
         return res.status(200).json({ message: "Song has been successfully removed" });
     }
     catch (error) {
         return res.status(500).json({ error: "Failed to delete the song" });
     }
 }
-
-
