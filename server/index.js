@@ -56,8 +56,8 @@ connect();
 //app.use('/', userRoute);
 app.use('/', adminRoute);
 app.use('/review', reviewRoute);
-app.use('/trivia',quizRoute)
-app.use('/leaderboard',leaderboard)
+app.use('/trivia',quizRoute);
+app.use('/leaderboard',leaderboard);
 //Server PORT number
 
 
