@@ -1,5 +1,5 @@
-import { Flex, Box, Text, VStack, Image, HStack } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
+import { Box, Flex, Image, Text, VStack } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import LeaderboardSVG from '../../assets/learderboard.svg';
 import fetchLeaderboardData from '../../services/LeaderboardServices';
 
