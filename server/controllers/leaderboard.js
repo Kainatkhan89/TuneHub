@@ -22,7 +22,7 @@ async function editLeaderboard(req, res) {
       // For example, you could add the rightAnswerScore to the user's current score.
   
       // Update the user's score in the database using updateOne
-      await Leaderboard.updateOne({ id: id }, { $set: { score: rightAnswerScore } });
+      await Leaderboard.updateOne({ id: id }, { $inc: { score: rightAnswerScore } });
       console.log(id+rightAnswerScore)
   
       // Send a response indicating success
