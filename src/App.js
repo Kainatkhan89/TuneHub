@@ -5,6 +5,8 @@ import {
 import React from 'react';
 import { RouterProvider, createBrowserRouter, } from "react-router-dom";
 import Login from './pages/Authentication/Login';
+import Register from './pages/Registration/Register';
+import ViewProfile from './pages/UserProfile/ViewProfile';
 import ContactUs from './pages/ContactUs/ContactUs';
 import AboutUs from './pages/ContactUs/AboutUs';
 import FAQ from './pages/FAQ/FAQ';
@@ -19,6 +21,7 @@ import SpotifyTopSongs from './pages/SpotifyIntegration/SpotifyTopSongs';
 import SpotifyArtists from './pages/SpotifyIntegration/SpotifyArtists';
 import SpotifyRecentlyPlayed from './pages/SpotifyIntegration/SpotifyRecentlyPlayed';
 import SongForm from './pages/Admin/SongForm';
+import ChangePassword from './pages/Authentication/ChangePassword';
 
 const router = createBrowserRouter([
   {
@@ -31,23 +34,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/faq",
-        element: <FAQ />
+        element: <FAQ/>
       },
       {
         path: "/about-us",
         element: <AboutUs />
       },
       {
-        path: "/contact-us",
-        element: <ContactUs />
+        path:"/contact-us",
+        element: <ContactUs/>
       },
       {
-        path: "/quiz",
-        element: <Quiz />
+        path:"/quiz",
+        element: <Quiz/>
       },
       {
-        path: "/leaderboard",
-        element: <Leaderboard />
+        path:"/leaderboard",
+        element: <Leaderboard/>
+      },
+       {
+        path:"/user/profile",
+        element: <ViewProfile/>
       },
       {
         path: "/spotify",
@@ -82,6 +89,14 @@ const router = createBrowserRouter([
         path: "/user/login",
         element: <Login />
       },
+      {
+         path: "/user/register",
+         element: <Register />
+      },
+      {
+           path: "/user/change-password",
+           element: <ChangePassword />
+            },
     ]
   }
 ]);

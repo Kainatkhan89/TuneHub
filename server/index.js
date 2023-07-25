@@ -10,7 +10,8 @@ var request = require('request');
 const adminRoute = require('./routes/admin.js');
 const reviewRoute = require('./routes/review.js');
 const quizRoute = require('./routes/quiz.js')
-const leaderboard = require('./routes/leaderboard')
+const leaderboard = require('./routes/leaderboard');
+const userRoute = require('./routes/users.js');
 const artistRoute = require('./routes/artist.js');
 
 const app = express();
@@ -57,13 +58,15 @@ connect();
 //app.use('/', userRoute);
 app.use('/', adminRoute);
 app.use('/review', reviewRoute);
-app.use('/trivia',quizRoute);
+app.use('/trivia',quizRoute)
 app.use('/leaderboard',leaderboard);
 app.use('/artist', artistRoute);
+app.use('/users',userRoute);
+app.use('/trivia',quizRoute);
 //Server PORT number
 
 
-// SPOTIFY WEB API AUTHORIZATION CODE FLOW 
+// SPOTIFY WEB API AUTHORIZATION CODE FLOW
 //Reference
 // https://developer.spotify.com/documentation/general/guides/authorization-guide/
 // https://github.com/spotify/web-api-auth-examples
@@ -77,20 +80,20 @@ app.use('/artist', artistRoute);
 var generateRandomString = function(length) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
+
     for (var i = 0; i < length; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
   };
-  
+
   var stateKey = 'spotify_auth_state';
 
   app.get('/spotify/login', function(req, res) {
 
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
-  
+
     // your application requests authorization
     var scope = 'user-read-private user-read-email user-read-recently-played user-top-read user-follow-read user-follow-modify playlist-read-private playlist-read-collaborative playlist-modify-public';
     res.redirect('https://accounts.spotify.com/authorize?' +
@@ -102,16 +105,16 @@ var generateRandomString = function(length) {
         state: state,
       }));
   });
-  
+
   app.get('/spotify/callback', function(req, res) {
-  
+
     // your application requests refresh and access tokens
     // after checking the state parameter
-  
+
     var code = req.query.code || null;
     var state = req.query.state || null;
     var storedState = req.cookies ? req.cookies[stateKey] : null;
-  
+
     if (state === null || state !== storedState) {
       res.redirect('/#' +
         querystring.stringify({
@@ -133,7 +136,7 @@ var generateRandomString = function(length) {
           },
           json: true,
       };
-  
+
       request.post(authOptions, function (error, response, body) {
         if (!error && response.statusCode === 200) {
           const access_token = body.access_token;
@@ -152,7 +155,7 @@ var generateRandomString = function(length) {
       });
     }
   });
-  
+
   app.get('/spotify/refresh_token', function (req, res) {
     // requesting access token from refresh token
     const refresh_token = req.query.refresh_token;
