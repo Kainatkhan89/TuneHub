@@ -322,7 +322,6 @@ export const getTrackAudioFeatures = trackId =>
       };
     } catch (error) {
       console.error(error);
-      // You can handle errors here as per your application's requirements
       return null;
     }
   };
@@ -342,7 +341,6 @@ export const getTrackAudioFeatures = trackId =>
       };
     } catch (error) {
       console.error(error);
-      // You can handle errors here as per your application's requirements
       return null;
     }
   };
