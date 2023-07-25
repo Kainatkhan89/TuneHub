@@ -65,6 +65,7 @@ exports.deleteSong = async (req, res) => {
     }
     try {
         await Song.deleteOne({ id: songId });
+        console.log("Inside delete");
         return res.status(200).json({ message: "Song has been successfully removed" });
     }
     catch (error) {
