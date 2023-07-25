@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -13,28 +14,78 @@ import {
 } from "@chakra-ui/react";
 
 export default function CustomerProfile() {
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const [isEditing, setIsEditing] = useState(false);
-  const [firstName, setFirstName] = useState("John");
-  const [lastName, setLastName] = useState("Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [phone, setPhone] = useState("123-456-7890");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const location = useLocation(); // Add this line
+  const user = location.state?.user;
+
+    useEffect(() => {
+      if (user) {
+        // Set the initial state with the user data from the location state
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
+        setEmail(user.email);
+        setDateOfBirth(user.dateOfBirth);
+      }
+    }, [user]);
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
-    // Perform save/update logic here (e.g., make API call)
-    // For this example, we will just toggle off the editing mode
-    setIsEditing(false);
+ const handleSaveClick = async () => {
+        // Prepare the updated user data
+        const updatedUser = {
+          firstName,
+          lastName,
+          email,
+          dateOfBirth,
+        };
+
+        try {
+          // Make the API call to update the user data
+          const response = await fetch(`http://localhost:5000/users/edit/${user._id["$oid"]}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedUser),
+          });
+
+          if (response.ok) {
+            // If the API call is successful, update the user in the state
+            setSuccessMessage("User data updated successfully!");
+            setTimeout(() => {setSuccessMessage(null);}, 3000);
+            const updatedUserData = await response.json();
+            setFirstName(updatedUserData.firstName);
+            setLastName(updatedUserData.lastName);
+            setEmail(updatedUserData.email);
+            setDateOfBirth(updatedUserData.dateOfBirth);
+
+          } else {
+            setErrorMessage("Failed to update user data");
+            setTimeout(() => {setErrorMessage(null);}, 5000);
+          }
+        } catch (error) {
+           setErrorMessage(`Something went wrong : ${error}`);
+           setTimeout(() => {setErrorMessage(null);}, 5000);
+        }
+        setIsEditing(false);
   };
 
   const handleCancelClick = () => {
     // Revert changes if any
-    setFirstName("John");
-    setLastName("Doe");
-    setEmail("johndoe@example.com");
-    setPhone("123-456-7890");
+     setFirstName(user.firstName);
+    setLastName(user.lastName);
+    setEmail(user.email);
+    setDateOfBirth(user.dateOfBirth);
     setIsEditing(false);
   };
 
@@ -52,6 +103,17 @@ export default function CustomerProfile() {
         <Box minW={{ base: "90%", md: "468px" }}>
           <form >
             <Stack spacing={4} p="1rem" backgroundColor="#050A30" borderRadius="10px" boxShadow="md" >
+
+              {successMessage && (
+                <Text color="green.500" textAlign="center">
+                  {successMessage}
+                </Text>
+              )}
+              {errorMessage && (
+                <Text color="red.500" textAlign="center">
+                  {errorMessage}
+                </Text>
+              )}
               <FormControl>
                 <FormLabel textColor="white" >First Name</FormLabel>
                 <Input
@@ -59,7 +121,7 @@ export default function CustomerProfile() {
                 value={firstName}
                 readOnly={!isEditing}
                 onChange={(e) => setFirstName(e.target.value)}
-                placeholder="John"
+               /* placeholder="John"*/
                 borderColor="white"
                 focusBorderColor="teal"
                 textColor="white"
@@ -72,7 +134,7 @@ export default function CustomerProfile() {
                  value={lastName}
                  readOnly={!isEditing}
                  onChange={(e) => setLastName(e.target.value)}
-                 placeholder="Doe"
+                /* placeholder="Doe"*/
                  borderColor="white"
                  focusBorderColor="teal"
                  textColor="white"
@@ -83,22 +145,23 @@ export default function CustomerProfile() {
                 <Input
                  type="email"
                  value={email}
-                 readOnly={!isEditing}
+                 readOnly={true}
                  onChange={(e) => setEmail(e.target.value)}
-                 placeholder="johndoe@email.com"
+                 /*placeholder="johndoe@email.com"*/
                  borderColor="white"
+                 bg="grey"
                  focusBorderColor="teal"
                  textColor="white"
                  />
               </FormControl>
               <FormControl>
-                <FormLabel textColor="white">Phone</FormLabel>
+                <FormLabel textColor="white">Date of Birth</FormLabel>
                 <Input
                  type="text"
-                 value={phone}
+                 value={dateOfBirth}
                  readOnly={!isEditing}
-                 onChange={(e) => setPhone(e.target.value)}
-                 placeholder="123456789"
+                 onChange={(e) => setDateOfBirth(e.target.value)}
+                /* placeholder="1900-01-01"*/
                  borderColor="white"
                  focusBorderColor="teal"
                  textColor="white"

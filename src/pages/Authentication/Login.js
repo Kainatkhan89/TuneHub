@@ -27,54 +27,36 @@ const navigate = useNavigate();
    const CFaLock = chakra(FaLock);
    const [showPassword, setShowPassword] = useState(false);
    const handleShowClick = () => setShowPassword(!showPassword);
-   // --handle submit
+
    const [email, setEmail] = useState('dev2104patel@gmail.com');
    const [password, setPassword] = useState('password123');
    const [error, setError] = useState('');
    const [isLoading, setIsLoading] = useState(false);
-   /*const handleSubmit = async event => {
-     event.preventDefault();
-     setIsLoading(true);
-     try {
-      // await userLogin({ email, password });
-       setIsLoading(false);
-       setShowPassword(false);
-       navigate('/user/profile')  //, {state:{firstname:"firstname",lastname:"lastname",email:email}}
-     } catch (error) {
-       setError('Invalid username or password');
-       setIsLoading(false);
-       setEmail('');
-       setPassword('');
-       setShowPassword(false);
-     }
-   };*/
+
    const handleSubmit = async event => {
      event.preventDefault();
      setIsLoading(true);
-
      try {
-       const response = await fetch('/users/login', {
+       const response = await fetch('http://localhost:5000/users/login', {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',
          },
          body: JSON.stringify({ email, password }),
        });
-
        const data = await response.json();
 
        if (!response.ok) {
-         // If the API returns an error status, set the error message accordingly.
          setError(data.message || 'Something went wrong.');
          setIsLoading(false);
          setEmail('');
          setPassword('');
          setShowPassword(false);
        } else {
-         // API call successful, handle the response or redirect to the profile page.
+         // API call successful
          setIsLoading(false);
          setShowPassword(false);
-         navigate('/user/profile'); // Redirect to the profile page
+         navigate('/user/profile', { state: { user: data.user } });
        }
      } catch (error) {
        setError('Error fetching user. Something went wrong.');
@@ -84,6 +66,8 @@ const navigate = useNavigate();
        setShowPassword(false);
      }
    };
+
+
    const handleClick = (e) => {
        e.preventDefault();
        navigate('/user/register');
