@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -7,10 +6,9 @@ import {
   FormLabel,
   Heading,
   Input,
-  Stack,
-  Text,
-  chakra,
+  Stack
 } from "@chakra-ui/react";
+import React, { useState } from "react";
 
 export default function CustomerProfile() {
   const [isEditing, setIsEditing] = useState(false);
