@@ -48,3 +48,25 @@ export const deleteSong = async (id) => {
     }
 }
 
+export const addSong = async (songData) => {
+    try
+    {
+        const postOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(songData)
+        }
+
+        const response = await fetch(`http://localhost:5000/add/song`, postOptions);
+        const data = await response.json();
+        return data;
+    }
+    catch(error)
+    {
+        console.error('Error while adding songs');
+        return null;
+    }
+}
+

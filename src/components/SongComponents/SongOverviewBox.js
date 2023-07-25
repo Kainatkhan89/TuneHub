@@ -9,9 +9,9 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import image1 from '../../assets/image1.jpg';
-import { fetchArtistById, deleteSong } from '../../services/AdminServices/AdminServices.js'
+import { deleteSong } from '../../services/AdminServices/AdminServices.js'
 
 function SongOverviewBox(props) {
 
@@ -26,14 +26,14 @@ function SongOverviewBox(props) {
 
     const { id, name, artist, duration } = props;
 
-    const [artists, setArtists] = useState([]);
+    //const [artists, setArtists] = useState([]);
 
     const toast = useToast();
     const removeToast = (message) => {
         toast({
             title: 'Song Removed',
             description: message,
-            duration: 7000,
+            duration: 5000,
             isClosable: true,
             status: 'success',
             position: 'top'
@@ -43,7 +43,7 @@ function SongOverviewBox(props) {
         toast({
             title: 'Error',
             description: error,
-            duration: 6000,
+            duration: 5000,
             isClosable: true,
             status: 'error',
             position: 'top'
@@ -72,23 +72,23 @@ function SongOverviewBox(props) {
         setIsAlertOpen(false);
     }
 
-    //This use effect will be able to call the artist based on the information present in the artist passed in as the props
-    useEffect(() => {
+    //This use effect will be able to get the name of the artist based on the information present in the artist passed in as the props
+    // useEffect(() => {
 
-        // Fetch artist information for each artistID in the array
-        const fetchArtistsData = async () => {
-            if (!Array.isArray(artist)) {
-                // Handle the case when artistID is not an array (e.g., throw an error or set default value)
-                console.error('Invalid artistID data type:', artist);
-                return;
-            }
-            const artistData = await Promise.all(artist.map((id) => fetchArtistById(id)));
+    //     // Fetch artist information for each artistID in the array
+    //     const fetchArtistsData = async () => {
+    //         if (!Array.isArray(artist)) {
+    //             // Handle the case when artistID is not an array (e.g., throw an error or set default value)
+    //             console.error('Invalid artistID data type:', artist);
+    //             return;
+    //         }
+    //         const artistData = await Promise.all(artist.map((id) => fetchArtistById(id)));
 
-            setArtists(artistData);
-        };
+    //         setArtists(artistData);
+    //     };
 
-        fetchArtistsData();
-    }, [artist]);
+    //     fetchArtistsData();
+    // }, [artist]);
 
     return (
         <>
@@ -117,9 +117,14 @@ function SongOverviewBox(props) {
                                     {duration}
                                 </Text>
                             </HStack>
-                            {artists?.map((artist) => (
+                            {/* {artists?.map((artist) => (
                                 <Text key={artist.id} fontSize="15px" color="whiteAlpha.900">
                                     {artist.name}
+                                </Text>
+                            ))} */}
+                            {artist?.map((item) => (
+                                <Text key={item} fontSize="15px" color="whiteAlpha.900">
+                                    {item}
                                 </Text>
                             ))}
                         </VStack>

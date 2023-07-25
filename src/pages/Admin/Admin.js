@@ -1,17 +1,11 @@
 import {
-    Box,
     Flex,
-    TabPanel,
-    TabPanels,
-    Tabs,
-    Text,
     VStack
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getAllSongs } from '../../services/AdminServices/AdminServices';
 import LeftSidePanel from '../../components/AdminComponent/AdminSidePanel.js';
-import AddSongForm from '../../components/AdminComponent/AddSongForm.js';
 import SongOverviewBox from '../../components/SongComponents/SongOverviewBox.js';
+import { getAllSongs } from '../../services/AdminServices/AdminServices';
 
 function LoadList({ songList, getSongList }) {
 
@@ -28,11 +22,7 @@ function AdminPage() {
     // No initial value is given so will automatically take the first index
     const [songList, setSongList] = useState([]);
 
-    const [selectedTab, setSelectedTab] = useState();
-
-    const handleTabChange = (tab) => {
-        setSelectedTab(tab);
-    };
+    const tabIndex = 0;
 
     const getSongList = async () => {
         const allSongs = await getAllSongs();
@@ -47,22 +37,12 @@ function AdminPage() {
 
     return (
         <Flex p={0} backgroundColor="#000C66" minH="100vh" overflow="hidden"> {/* Set padding to 0 and overflow to hidden */}
-            <LeftSidePanel selectedTab={selectedTab} handleTabChange={handleTabChange} />
-            <Box ml="50px" mr="50px" flex="1" position="relative"> {/* Use ml (margin-left) to create space for the tab */}
-                <Tabs index={selectedTab} onChange={handleTabChange} h="100%" ml="0"> {/* Set the height of Tabs to 100% */}
-                    <TabPanels ml="0" display= "flex" justifyContent= "center">
-                        <TabPanel>
-                            <LoadList songList={songList} getSongList={getSongList} />
-                        </TabPanel>
-                        <TabPanel backgroundColor="#050A30" mt = "60px" borderRadius="10px"  justifyContent="center" alignItems="center">
-                            <AddSongForm />
-                        </TabPanel>
-                        <TabPanel>
-                            <Text>Review Moderation</Text>
-                        </TabPanel>
-                    </TabPanels>
-                </Tabs>
-            </Box>
+            <Flex minH="100vh" >
+                <LeftSidePanel selectedTab={tabIndex} />
+            </Flex>
+            <Flex ml="50px" mr="50px" flex="1" position="relative" justifyContent="center"> {/* Use ml (margin-left) to create space for the tab */}
+                <LoadList songList={songList} getSongList={getSongList} />
+            </Flex>
         </Flex>
     );
 }

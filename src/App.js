@@ -18,6 +18,7 @@ import SpotifyContainer from './pages/SpotifyIntegration/SpotifyContainer';
 import SpotifyTopSongs from './pages/SpotifyIntegration/SpotifyTopSongs';
 import SpotifyArtists from './pages/SpotifyIntegration/SpotifyArtists';
 import SpotifyRecentlyPlayed from './pages/SpotifyIntegration/SpotifyRecentlyPlayed';
+import SongForm from './pages/Admin/SongForm';
 
 const router = createBrowserRouter([
   {
@@ -26,8 +27,7 @@ const router = createBrowserRouter([
       {
         // Change this path back to the Admin page
         path: "/",
-        //element: <LandingPage />
-        element: <AdminPage />
+        element: <LandingPage />
       },
       {
         path: "/faq",
@@ -64,6 +64,14 @@ const router = createBrowserRouter([
       {
         path: "/spotify/recently-played",
         element: <SpotifyRecentlyPlayed />
+      },
+      {
+        path: "/admin",
+        element: <AdminPage />
+      },
+      {
+        path: "/admin/addSong",
+        element : <SongForm />
       }
     ]
   },
