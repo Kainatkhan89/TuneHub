@@ -41,8 +41,8 @@ function NavBar() {
                   </Box>
                   {/* Features */}
                   <Box>
-                    <NavLink to='/' onClick={onClose}>
-                      <Text fontWeight="medium" color="white" >Features</Text>
+                    <NavLink to='/spotify' onClick={onClose}>
+                      <Text fontWeight="medium" color="white" >My Spotify</Text>
                     </NavLink>
                   </Box>
                   {/* About Us */}
@@ -84,8 +84,8 @@ function NavBar() {
           </Box>
           {/* Features */}
           <Box>
-            <NavLink to='/'>
-              <Text fontWeight="medium" color="white" fontSize="lg">Features</Text>
+            <NavLink to='/spotify'>
+              <Text fontWeight="medium" color="white" fontSize="lg">My Spotify</Text>
             </NavLink>
           </Box>
           {/* About Us */}
@@ -107,7 +107,7 @@ function NavBar() {
             </NavLink>
           </Box>
           {/* CTA */}
-          <NavLink to='/'>
+          <NavLink to='/user/login'>
             <Button fontWeight="medium" colorScheme="teal" variant="solid" fontSize="lg">Sign In/Up</Button>
           </NavLink>
         </HStack>
