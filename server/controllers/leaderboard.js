@@ -4,7 +4,6 @@ const Leaderboard = require('../models/leaderboardModel');
 async function getLeaderboard(req, res) {
   try {
     const leaderboardData = await Leaderboard.find({}).sort({ score: -1 });
-    console.log(leaderboardData);
     res.json(leaderboardData);
   } catch (error) {
     console.error('Error fetching Leaderboard:', error);
@@ -23,7 +22,7 @@ async function editLeaderboard(req, res) {
   
       // Update the user's score in the database using updateOne
       await Leaderboard.updateOne({ id: id }, { $inc: { score: rightAnswerScore } });
-      console.log(id+rightAnswerScore)
+
   
       // Send a response indicating success
       res.json({ message: 'User score updated successfully' });
