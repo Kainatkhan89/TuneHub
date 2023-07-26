@@ -65,6 +65,8 @@ export default function Register() {
           const user = responseData.user;
             setIsLoading(false);
             setShowPassword(false);
+            setCookie("id", data.user.id, 7);
+            localStorage.setItem('user', JSON.stringify(user));
             navigate('/user/profile', { state: { user } });
           } else {
             setError('Failed to register. Please try again.');
@@ -88,6 +90,13 @@ export default function Register() {
       setShowPassword(false);
     }
   };
+
+  function setCookie(name, value, daysToExpire) {
+    const date = new Date();
+    date.setTime(date.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value};${expires};path=/`;
+  }
 
   return (
     <Center h="100vh" bg="#000C66">

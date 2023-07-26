@@ -70,26 +70,36 @@ exports.getUser = async (req,res) => {
 
 // API to edit a user
 exports.updateUser = async (req, res) => {
-   const userId = req.params.id;
+    const userId = req.params.id;
     const updatedBody = req.body;
-  const { email, firstName } = req.body;
+    const { firstName,
+            lastName,
+            dateOfBirth } = req.body;
       //const isNewUserRequestBodyValid = RequestValidator.validateNewUserRequestBody(req.body);
-        try {
-            if(Object.keys(body).length == 0){
-                return res.status(400).json({ success: false, data: "Incorrect Request"});
-          }
+    try {
+        if(firstName===null && lastName===null && dateOfBirth===null ){
+            return res.status(400).json({ success: false, data: "Incorrect Request"});
+        }
+        const currentUser = await Users.findOne( { id: userId });
+        if (!currentUser) {
+           return res.status(404).json({ success: false, message: 'Account not found.' });
+        }
 
-      const updatedUser = await Users.findOneAndUpdate(
+   /*   const updatedUser = await Users.findOneAndUpdate(
       { _id: userId },
       { updatedBody },
       { new: true }
-      );
+      );*/
 
-      if (!updatedUser) {
-        return res.status(404).json({ success: false, message: 'User not found.' });
-      }
+      currentUser.firstName = firstName;
+      currentUser.lastName = lastName;
+      currentUser.dateOfBirth = dateOfBirth;
+        const updatedUser = await Users.updateOne(
+        { id: userId },
+         currentUser
+        );
 
-      res.status(200).json({ success: true, message: 'User updated.' });
+        res.status(200).json({ success: true, message: 'User updated.' });
     } catch (err) {
       res.status(500).json({ success: false, message: 'Error updating user. Something went wrong.' });
     }
@@ -120,6 +130,28 @@ exports.changePassword = async (req, res) => {
         }
 
 }
+
+// API to delete a user by id
+exports.deleteUser = async function (req, res) {
+  const userId = req.params.id;
+
+  try {
+    const user = await Users.findOne( { id: userId });
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found.' });
+    }
+  if (!(user instanceof Users)) {
+      return res.status(500).json({ success: false, message: 'Invalid user data.' });
+    }
+   await Users.deleteOne({ id: userId });
+
+    res.status(200).json({ success: true, message: 'User deleted.' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Error deleting user. Something went wrong.' });
+  }
+};
+
 
 
 

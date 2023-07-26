@@ -10,4 +10,5 @@ router.post('/register', userController.registerUser);
 router.get('/user/:id', userController.getUser);
 router.put('/edit/:id', userController.updateUser);
 router.put('/changePassword/:id', userController.changePassword);
+router.delete('/delete/:id', userController.deleteUser);
 module.exports = router;

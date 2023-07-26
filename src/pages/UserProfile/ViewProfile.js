@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation,useNavigate } from 'react-router-dom';
+
 import {
   Box,
   Button,
@@ -11,9 +13,9 @@ import {
   Text,
   chakra
 } from "@chakra-ui/react";
-import React, { useState } from "react";
 
 export default function CustomerProfile() {
+  const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -22,10 +24,13 @@ export default function CustomerProfile() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const location = useLocation(); // Add this line
+  const location = useLocation();
   const user = location.state?.user;
 
-    useEffect(() => {
+  const userFromState = location.state?.user;
+  const [userFromLocalStorage, setUserFromLocalStorage] = useState(null);
+
+    /*useEffect(() => {
       if (user) {
         // Set the initial state with the user data from the location state
         setFirstName(user.firstName);
@@ -33,52 +38,94 @@ export default function CustomerProfile() {
         setEmail(user.email);
         setDateOfBirth(user.dateOfBirth);
       }
-    }, [user]);
+    }, [user]);*/
+
+      useEffect(() => {
+        // Retrieve user data from local storage
+        const userJSON = localStorage.getItem("user");
+        if (userJSON) {
+          const userFromLocalStorage = JSON.parse(userJSON);
+          setUserFromLocalStorage(userFromLocalStorage);
+        }
+      }, []);
+
+      useEffect(() => {
+        // If user data is available from state, use it
+        if (userFromState) {
+          setFirstName(userFromState.firstName);
+          setLastName(userFromState.lastName);
+          setEmail(userFromState.email);
+          setDateOfBirth(userFromState.dateOfBirth);
+
+        } else if (userFromLocalStorage) {
+          // If user data is available from local storage, use it
+          setFirstName(userFromLocalStorage.firstName);
+          setLastName(userFromLocalStorage.lastName);
+          setEmail(userFromLocalStorage.email);
+          setDateOfBirth(userFromLocalStorage.dateOfBirth);
+        }
+      }, [userFromState, userFromLocalStorage]);
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
- const handleSaveClick = async () => {
-        // Prepare the updated user data
-        const updatedUser = {
-          firstName,
-          lastName,
-          email,
-          dateOfBirth,
-        };
+  const handleSaveClick = async () => {
 
-        try {
-          // Make the API call to update the user data
-          const response = await fetch(`http://localhost:5000/users/edit/${user._id["$oid"]}`,
-          {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedUser),
-          });
+      const updatedUser = {
+        firstName,
+        lastName,
+        dateOfBirth,
+      };
 
-          if (response.ok) {
-            // If the API call is successful, update the user in the state
-            setSuccessMessage("User data updated successfully!");
-            setTimeout(() => {setSuccessMessage(null);}, 3000);
-            const updatedUserData = await response.json();
-            setFirstName(updatedUserData.firstName);
-            setLastName(updatedUserData.lastName);
-            setEmail(updatedUserData.email);
-            setDateOfBirth(updatedUserData.dateOfBirth);
+      try {
+        // Make the API call to update the user data
+        const response = await fetch(`http://localhost:5000/users/edit/${user.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedUser),
+        });
 
-          } else {
-            setErrorMessage("Failed to update user data");
-            setTimeout(() => {setErrorMessage(null);}, 5000);
-          }
-        } catch (error) {
-           setErrorMessage(`Something went wrong : ${error}`);
-           setTimeout(() => {setErrorMessage(null);}, 5000);
+        if (response.ok) {
+          // If the API call is successful, update the user in the state
+          setSuccessMessage("User data updated successfully!");
+          setErrorMessage("");
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 3000);
+          const updatedUserData = await response.json();
+          setFirstName(updatedUserData.firstName);
+          setLastName(updatedUserData.lastName);
+          setEmail(updatedUserData.email);
+          setDateOfBirth(updatedUserData.dateOfBirth);
+
+          // Update user information in local storage
+          localStorage.setItem("user", JSON.stringify(updatedUserData));
+          user.firstName =updatedUserData.firstName;
+          user.lastName =updatedUserData.lastName;
+          user.dateOfBirth =updatedUserData.dateOfBirth;
+
+          setIsEditing(false);
+        } else {
+           setSuccessMessage("");
+          setErrorMessage("Failed to update user data");
+          /*setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);*/
+          setIsEditing(true);
         }
-        setIsEditing(false);
-  };
+      } catch (error) {
+      setSuccessMessage("");
+        setErrorMessage(`Something went wrong: ${error}`);
+        /*setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);*/
+        setIsEditing(true);
+      }
+
+    };
 
   const handleCancelClick = () => {
     // Revert changes if any
@@ -89,7 +136,27 @@ export default function CustomerProfile() {
     setIsEditing(false);
   };
 
-  return (
+    const handleDeleteClick = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/users/delete/${user.id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            // If the API call is successful, remove the user from local storage and navigate back to the homepage
+            localStorage.removeItem("user");
+            navigate('/');
+          } else {
+            setErrorMessage("Failed to delete user");
+          }
+        } catch (error) {
+          setErrorMessage(`Something went wrong: ${error}`);
+        }
+      };
+    return (
     <Center h="100vh" bg="#000C66">
       <Stack
         flexDir="column"
@@ -175,6 +242,9 @@ export default function CustomerProfile() {
                   <Button variant="outline" colorScheme="teal" onClick={handleCancelClick}>
                     Cancel
                   </Button>
+                  <Button variant="solid" colorScheme="red" onClick={handleDeleteClick}>
+                      Delete
+                  </Button>
                 </Stack>
               ) : (
                 <Button variant="solid" colorScheme="teal" onClick={handleEditClick}>
@@ -186,5 +256,5 @@ export default function CustomerProfile() {
         </Box>
       </Stack>
     </Center>
-  );
+    );
 }

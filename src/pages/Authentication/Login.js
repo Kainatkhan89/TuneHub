@@ -22,50 +22,57 @@ import ErrorMessage from '../../components/Messages/ErrorMessage';
 
 export default function Login()
 {
-const navigate = useNavigate();
+    const navigate = useNavigate();
    const CFaUserAlt = chakra(FaUserAlt);
    const CFaLock = chakra(FaLock);
    const [showPassword, setShowPassword] = useState(false);
    const handleShowClick = () => setShowPassword(!showPassword);
 
-   const [email, setEmail] = useState('dev2104patel@gmail.com');
-   const [password, setPassword] = useState('password123');
+   const [email, setEmail] = useState('');
+   const [password, setPassword] = useState('');
    const [error, setError] = useState('');
    const [isLoading, setIsLoading] = useState(false);
 
-   const handleSubmit = async event => {
+   const handleSubmit = async (event) => {
      event.preventDefault();
      setIsLoading(true);
      try {
-       const response = await fetch('http://localhost:5000/users/login', {
+       // Fetch the latest response by using await before each API call
+       const loginResponse = await fetch('http://localhost:5000/users/login', {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',
          },
          body: JSON.stringify({ email, password }),
        });
-       const data = await response.json();
 
-       if (!response.ok) {
+       const data = await loginResponse.json();
+       if (!loginResponse.ok) {
          setError(data.message || 'Something went wrong.');
-         setIsLoading(false);
-         setEmail('');
-         setPassword('');
-         setShowPassword(false);
        } else {
          // API call successful
-         setIsLoading(false);
-         setShowPassword(false);
+         const userData = JSON.stringify(data.user);
+         setCookie("id", data.user.id, 7);
+         localStorage.setItem('user', userData);
          navigate('/user/profile', { state: { user: data.user } });
        }
      } catch (error) {
        setError('Error fetching user. Something went wrong.');
+     } finally {
        setIsLoading(false);
-       setEmail('');
-       setPassword('');
-       setShowPassword(false);
      }
    };
+
+// Function to set a cookie with a given name, value, and expiration date
+function setCookie(name, value, daysToExpire) {
+  const date = new Date();
+  date.setTime(date.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value};${expires};path=/`;
+}
+
+// Example usage
+ // Save the username for 7 days
 
 
    const handleClick = (e) => {
