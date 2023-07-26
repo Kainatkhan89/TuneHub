@@ -59,7 +59,7 @@ export const getFavorites = async (userID) => {
 
 export const isFavorite = async (userID, songID) => {
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },

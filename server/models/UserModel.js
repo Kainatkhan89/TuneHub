@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   lastName: {
     type: String
   },
-  favouriteSongs:[{
+  favoriteSongs:[{
     type: String
   }],
 }, { collection: 'User' });
