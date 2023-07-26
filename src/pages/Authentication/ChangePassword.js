@@ -1,3 +1,5 @@
+// Author: Kainat Khan
+// Date: July 24, 2023
 import {
   Box,
   Button,
@@ -28,52 +30,52 @@ export default function ChangePassword() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event) => {
-      event.preventDefault();
-      setIsLoading(true);
+    event.preventDefault();
+    setIsLoading(true);
 
-      if (password.length < 8 ) {
-        setErrorMessage("Password should have minimum 8 characters!");
+    if (password.length < 8) {
+      setErrorMessage("Password should have minimum 8 characters!");
+      setSuccessMessage("");
+      setIsLoading(false);
+      return;
+    } else
+      if (password !== cpassword) {
+        setErrorMessage("New password and confirm password do not match.");
+        setTimeout(() => { setErrorMessage(null); }, 3000);
         setSuccessMessage("");
         setIsLoading(false);
-        return;
-       } else
-        if (password !== cpassword) {
-          setErrorMessage("New password and confirm password do not match.");
-          setTimeout(() => {setErrorMessage(null);}, 3000);
+        setShowPassword(false);
+
+      } else {
+        try {
+          const response = await fetch(`http://localhost:8080/users/changePassword/${email}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ password }),
+          });
+
+          if (response.ok) {
+            setSuccessMessage("Password changed successfully!");
+            setTimeout(() => { setSuccessMessage(null); }, 3000);
+            setErrorMessage("");
+            setPassword("");
+            setCPassword("");
+          } else {
+            setErrorMessage("Failed to change password. Please try again.");
+            setTimeout(() => { setErrorMessage(null); }, 3000);
+            setSuccessMessage("");
+          }
+        } catch (error) {
+          setErrorMessage("An error occurred. Please try again later.");
+          setTimeout(() => { setErrorMessage(null); }, 3000);
           setSuccessMessage("");
-          setIsLoading(false);
-          setShowPassword(false);
-
-          } else{
-               try {
-                const response = await fetch(`http://localhost:5000/users/changePassword/${email}`, {
-                  method: 'PUT',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({ password }),
-                });
-
-                if (response.ok) {
-                  setSuccessMessage("Password changed successfully!");
-                  setTimeout(() => {setSuccessMessage(null);}, 3000);
-                  setErrorMessage("");
-                  setPassword("");
-                  setCPassword("");
-                } else {
-                  setErrorMessage("Failed to change password. Please try again.");
-                  setTimeout(() => {setErrorMessage(null);}, 3000);
-                  setSuccessMessage("");
-                }
-              } catch (error) {
-                setErrorMessage("An error occurred. Please try again later.");
-                setTimeout(() => {setErrorMessage(null);}, 3000);
-                setSuccessMessage("");
-              }
-                  setIsLoading(false);
-                  setShowPassword(false);
-              }
-    };
+        }
+        setIsLoading(false);
+        setShowPassword(false);
+      }
+  };
 
   return (
     <Center h="100vh" bg="#000C66">
@@ -95,13 +97,13 @@ export default function ChangePassword() {
                 </Text>
               )}
               <FormControl isRequired>
-              <FormLabel>Email Address</FormLabel>
-              <Input
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </FormControl>
+                <FormLabel>Email Address</FormLabel>
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </FormControl>
               <FormControl isRequired>
                 <FormLabel>New Password</FormLabel>
                 <InputGroup>

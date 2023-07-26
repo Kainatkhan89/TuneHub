@@ -1,5 +1,7 @@
+// Author: Kainat Khan
+// Date: July 24, 2023
 import React, { useState, useEffect } from "react";
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   Box,
@@ -30,41 +32,41 @@ export default function CustomerProfile() {
   const userFromState = location.state?.user;
   const [userFromLocalStorage, setUserFromLocalStorage] = useState(null);
 
-    /*useEffect(() => {
-      if (user) {
-        // Set the initial state with the user data from the location state
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
-        setEmail(user.email);
-        setDateOfBirth(user.dateOfBirth);
-      }
-    }, [user]);*/
+  /*useEffect(() => {
+    if (user) {
+      // Set the initial state with the user data from the location state
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setEmail(user.email);
+      setDateOfBirth(user.dateOfBirth);
+    }
+  }, [user]);*/
 
-      useEffect(() => {
-        // Retrieve user data from local storage
-        const userJSON = localStorage.getItem("user");
-        if (userJSON) {
-          const userFromLocalStorage = JSON.parse(userJSON);
-          setUserFromLocalStorage(userFromLocalStorage);
-        }
-      }, []);
+  useEffect(() => {
+    // Retrieve user data from local storage
+    const userJSON = localStorage.getItem("user");
+    if (userJSON) {
+      const userFromLocalStorage = JSON.parse(userJSON);
+      setUserFromLocalStorage(userFromLocalStorage);
+    }
+  }, []);
 
-      useEffect(() => {
-        // If user data is available from state, use it
-        if (userFromState) {
-          setFirstName(userFromState.firstName);
-          setLastName(userFromState.lastName);
-          setEmail(userFromState.email);
-          setDateOfBirth(userFromState.dateOfBirth);
+  useEffect(() => {
+    // If user data is available from state, use it
+    if (userFromState) {
+      setFirstName(userFromState.firstName);
+      setLastName(userFromState.lastName);
+      setEmail(userFromState.email);
+      setDateOfBirth(userFromState.dateOfBirth);
 
-        } else if (userFromLocalStorage) {
-          // If user data is available from local storage, use it
-          setFirstName(userFromLocalStorage.firstName);
-          setLastName(userFromLocalStorage.lastName);
-          setEmail(userFromLocalStorage.email);
-          setDateOfBirth(userFromLocalStorage.dateOfBirth);
-        }
-      }, [userFromState, userFromLocalStorage]);
+    } else if (userFromLocalStorage) {
+      // If user data is available from local storage, use it
+      setFirstName(userFromLocalStorage.firstName);
+      setLastName(userFromLocalStorage.lastName);
+      setEmail(userFromLocalStorage.email);
+      setDateOfBirth(userFromLocalStorage.dateOfBirth);
+    }
+  }, [userFromState, userFromLocalStorage]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -72,91 +74,91 @@ export default function CustomerProfile() {
 
   const handleSaveClick = async () => {
 
-      const updatedUser = {
-        firstName,
-        lastName,
-        dateOfBirth,
-      };
+    const updatedUser = {
+      firstName,
+      lastName,
+      dateOfBirth,
+    };
 
-      try {
-        // Make the API call to update the user data
-        const response = await fetch(`http://localhost:5000/users/edit/${user.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedUser),
-        });
+    try {
+      // Make the API call to update the user data
+      const response = await fetch(`http://localhost:8080/users/edit/${user.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUser),
+      });
 
-        if (response.ok) {
-          // If the API call is successful, update the user in the state
-          setSuccessMessage("User data updated successfully!");
-          setErrorMessage("");
-          setTimeout(() => {
-            setSuccessMessage(null);
-          }, 3000);
-          const updatedUserData = await response.json();
-          setFirstName(updatedUserData.firstName);
-          setLastName(updatedUserData.lastName);
-          setEmail(updatedUserData.email);
-          setDateOfBirth(updatedUserData.dateOfBirth);
+      if (response.ok) {
+        // If the API call is successful, update the user in the state
+        setSuccessMessage("User data updated successfully!");
+        setErrorMessage("");
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 3000);
+        const updatedUserData = await response.json();
+        setFirstName(updatedUserData.firstName);
+        setLastName(updatedUserData.lastName);
+        setEmail(updatedUserData.email);
+        setDateOfBirth(updatedUserData.dateOfBirth);
 
-          // Update user information in local storage
-          localStorage.setItem("user", JSON.stringify(updatedUserData));
-          user.firstName =updatedUserData.firstName;
-          user.lastName =updatedUserData.lastName;
-          user.dateOfBirth =updatedUserData.dateOfBirth;
+        // Update user information in local storage
+        localStorage.setItem("user", JSON.stringify(updatedUserData));
+        user.firstName = updatedUserData.firstName;
+        user.lastName = updatedUserData.lastName;
+        user.dateOfBirth = updatedUserData.dateOfBirth;
 
-          setIsEditing(false);
-        } else {
-           setSuccessMessage("");
-          setErrorMessage("Failed to update user data");
-          /*setTimeout(() => {
-            setErrorMessage(null);
-          }, 5000);*/
-          setIsEditing(true);
-        }
-      } catch (error) {
-      setSuccessMessage("");
-        setErrorMessage(`Something went wrong: ${error}`);
+        setIsEditing(false);
+      } else {
+        setSuccessMessage("");
+        setErrorMessage("Failed to update user data");
         /*setTimeout(() => {
           setErrorMessage(null);
         }, 5000);*/
         setIsEditing(true);
       }
+    } catch (error) {
+      setSuccessMessage("");
+      setErrorMessage(`Something went wrong: ${error}`);
+      /*setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);*/
+      setIsEditing(true);
+    }
 
-    };
+  };
 
   const handleCancelClick = () => {
     // Revert changes if any
-     setFirstName(user.firstName);
+    setFirstName(user.firstName);
     setLastName(user.lastName);
     setEmail(user.email);
     setDateOfBirth(user.dateOfBirth);
     setIsEditing(false);
   };
 
-    const handleDeleteClick = async () => {
-        try {
-          const response = await fetch(`http://localhost:5000/users/delete/${user.id}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+  const handleDeleteClick = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/users/delete/${user.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-          if (response.ok) {
-            // If the API call is successful, remove the user from local storage and navigate back to the homepage
-            localStorage.removeItem("user");
-            navigate('/');
-          } else {
-            setErrorMessage("Failed to delete user");
-          }
-        } catch (error) {
-          setErrorMessage(`Something went wrong: ${error}`);
-        }
-      };
-    return (
+      if (response.ok) {
+        // If the API call is successful, remove the user from local storage and navigate back to the homepage
+        localStorage.removeItem("user");
+        navigate('/');
+      } else {
+        setErrorMessage("Failed to delete user");
+      }
+    } catch (error) {
+      setErrorMessage(`Something went wrong: ${error}`);
+    }
+  };
+  return (
     <Center h="100vh" bg="#000C66">
       <Stack
         flexDir="column"
@@ -184,57 +186,57 @@ export default function CustomerProfile() {
               <FormControl>
                 <FormLabel textColor="white" >First Name</FormLabel>
                 <Input
-                type="text"
-                value={firstName}
-                readOnly={!isEditing}
-                onChange={(e) => setFirstName(e.target.value)}
-               /* placeholder="John"*/
-                borderColor="white"
-                focusBorderColor="teal"
-                textColor="white"
+                  type="text"
+                  value={firstName}
+                  readOnly={!isEditing}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  /* placeholder="John"*/
+                  borderColor="white"
+                  focusBorderColor="teal"
+                  textColor="white"
                 />
               </FormControl>
               <FormControl>
                 <FormLabel textColor="white">Last Name</FormLabel>
                 <Input
-                 type="text"
-                 value={lastName}
-                 readOnly={!isEditing}
-                 onChange={(e) => setLastName(e.target.value)}
-                /* placeholder="Doe"*/
-                 borderColor="white"
-                 focusBorderColor="teal"
-                 textColor="white"
-                 />
+                  type="text"
+                  value={lastName}
+                  readOnly={!isEditing}
+                  onChange={(e) => setLastName(e.target.value)}
+                  /* placeholder="Doe"*/
+                  borderColor="white"
+                  focusBorderColor="teal"
+                  textColor="white"
+                />
               </FormControl>
               <FormControl>
                 <FormLabel textColor="white" >Email</FormLabel>
                 <Input
-                 type="email"
-                 value={email}
-                 readOnly={true}
-                 onChange={(e) => setEmail(e.target.value)}
-                 /*placeholder="johndoe@email.com"*/
-                 borderColor="white"
-                 bg="grey"
-                 focusBorderColor="teal"
-                 textColor="white"
-                 />
+                  type="email"
+                  value={email}
+                  readOnly={true}
+                  onChange={(e) => setEmail(e.target.value)}
+                  /*placeholder="johndoe@email.com"*/
+                  borderColor="white"
+                  bg="grey"
+                  focusBorderColor="teal"
+                  textColor="white"
+                />
               </FormControl>
               <FormControl>
                 <FormLabel textColor="white">Date of Birth</FormLabel>
                 <Input
-                 type="text"
-                 value={dateOfBirth}
-                 readOnly={!isEditing}
-                 onChange={(e) => setDateOfBirth(e.target.value)}
-                /* placeholder="1900-01-01"*/
-                 borderColor="white"
-                 focusBorderColor="teal"
-                 textColor="white"
-                 />
+                  type="text"
+                  value={dateOfBirth}
+                  readOnly={!isEditing}
+                  onChange={(e) => setDateOfBirth(e.target.value)}
+                  /* placeholder="1900-01-01"*/
+                  borderColor="white"
+                  focusBorderColor="teal"
+                  textColor="white"
+                />
               </FormControl>
-              {isEditing? (
+              {isEditing ? (
                 <Stack direction="row" spacing={5} justify="center">
                   <Button variant="solid" colorScheme="teal" onClick={handleSaveClick}>
                     Save
@@ -243,7 +245,7 @@ export default function CustomerProfile() {
                     Cancel
                   </Button>
                   <Button variant="solid" colorScheme="red" onClick={handleDeleteClick}>
-                      Delete
+                    Delete
                   </Button>
                 </Stack>
               ) : (
@@ -256,5 +258,5 @@ export default function CustomerProfile() {
         </Box>
       </Stack>
     </Center>
-    );
+  );
 }

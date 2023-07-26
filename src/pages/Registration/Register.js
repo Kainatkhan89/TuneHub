@@ -1,3 +1,5 @@
+// Author: Kainat Khan
+// Date: July 24, 2023
 import {
   Button,
   Center,
@@ -12,13 +14,13 @@ import {
   Text
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import ErrorMessage from '../../components/Messages/ErrorMessage';
 
 export default function Register() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
@@ -45,13 +47,13 @@ export default function Register() {
     if (password === cpassword) {
       if (password.length >= 8) {
         try {
-          const response = await fetch('http://localhost:5000/users/register', {
+          const response = await fetch('http://localhost:8080/users/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-            id: uuidv4(),
+              id: uuidv4(),
               firstName: firstname,
               lastName: lastname,
               email: email,
@@ -59,13 +61,13 @@ export default function Register() {
             }),
           });
 
-           const responseData  = await response.json();
+          const responseData = await response.json();
 
           if (response.ok) {
-          const user = responseData.user;
+            const user = responseData.user;
             setIsLoading(false);
             setShowPassword(false);
-            setCookie("id", data.user.id, 7);
+            // ssetCookie("id", data?.user.id, 7);
             localStorage.setItem('user', JSON.stringify(user));
             navigate('/user/profile', { state: { user } });
           } else {
@@ -91,12 +93,12 @@ export default function Register() {
     }
   };
 
-  function setCookie(name, value, daysToExpire) {
-    const date = new Date();
-    date.setTime(date.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
-    const expires = `expires=${date.toUTCString()}`;
-    document.cookie = `${name}=${value};${expires};path=/`;
-  }
+  // function setCookie(name, value, daysToExpire) {
+  //   const date = new Date();
+  //   date.setTime(date.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
+  //   const expires = `expires=${date.toUTCString()}`;
+  //   document.cookie = `${name}=${value};${expires};path=/`;
+  // }
 
   return (
     <Center h="100vh" bg="#000C66">

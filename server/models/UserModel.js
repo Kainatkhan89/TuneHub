@@ -1,6 +1,8 @@
+// Author: Kainat Khan
+// Date: July 24, 2023
 const mongoose = require('mongoose');
 
-// Define the User schema
+// User schema
 const userSchema = new mongoose.Schema({
   id: {
     type: String
@@ -23,9 +25,12 @@ const userSchema = new mongoose.Schema({
   lastName: {
     type: String
   },
+  favouriteSongs:[{
+    type: String
+  }],
 }, { collection: 'User' });
 
-// Create the User model
+// User model
 const Users = mongoose.model('User', userSchema, "User");
 
 module.exports = Users;
