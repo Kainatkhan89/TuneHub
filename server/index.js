@@ -16,6 +16,7 @@ const userRoute = require('./routes/users.js');
 const artistRoute = require('./routes/artist.js');
 const favoritesRoute = require('./routes/favorites.js');
 
+const genreRoute = require('./routes/genre.js');
 
 const app = express();
 dotenv.config();
@@ -65,6 +66,7 @@ app.use('/users', userRoute);
 app.use('/trivia', quizRoute);
 app.use('/favorites', favoritesRoute);
 app.use('/song', songRoute);
+app.use('/genre', genreRoute);
 //Server PORT number
 
 

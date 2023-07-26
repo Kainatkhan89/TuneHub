@@ -21,6 +21,7 @@ import SpotifyTopSongs from './pages/SpotifyIntegration/SpotifyTopSongs';
 import SpotifyArtists from './pages/SpotifyIntegration/SpotifyArtists';
 import SpotifyRecentlyPlayed from './pages/SpotifyIntegration/SpotifyRecentlyPlayed';
 import SongForm from './pages/Admin/SongForm';
+import Search from './pages/Search/SearchSong';
 import ChangePassword from './pages/Authentication/ChangePassword';
 import MyFavorites from './pages/Favorites/MyFavorites';
 import SongPage from './pages/Song/SongPage';
@@ -47,8 +48,8 @@ const router = createBrowserRouter([
         element: <ContactUs />
       },
       {
-        path: "/quiz",
-        element: <Quiz />
+        path:"/trivia",
+        element: <Quiz/>
       },
       {
         path: "/leaderboard",
@@ -89,7 +90,15 @@ const router = createBrowserRouter([
       {
         path: "/song/:songID",
         element: <SongPage />
-      }
+      },
+      {
+        path: "/search/song",
+        element : <Search/>
+      },
+      // {
+      //   path : "/search/artist",
+      //   element :<>,
+      // }
     ]
   },
   {

@@ -12,6 +12,7 @@ const songSchema = new mongoose.Schema({
   genres: [{ type: String }],
   releaseYear: { type: Number },
   reviews: { type : [Review.schema], default : []},
+  image : {type : String},
 });
 
 songSchema.pre('save', async function (next) {
