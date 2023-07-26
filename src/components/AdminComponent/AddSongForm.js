@@ -15,10 +15,11 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  useToast,
+  useToast,Box,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { addSong } from '../../services/AdminServices/AdminServices';
+import { useMediaQuery } from 'react-responsive';
 
 function AddSongForm(props) {
   // State variables for form validation and data
@@ -29,22 +30,26 @@ function AddSongForm(props) {
   const [artists, setArtists] = useState([]);
   const [artistInput, setArtistInput] = useState('');
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' });
+  const [imageFile, setImageFile] = useState(null);
 
   // Handle confirmation for adding the song
   const handleConfirmAction = async () => {
+    const base64 = await convertToBase64(imageFile);
     const songData = {
       name: Form.name.value,
       artist: artists,
       duration: Form.duration.value,
       genres: genres,
       releaseYear: Form.releaseYear.value,
+      image : base64,
     };
+    console.log(songData);
     const response = await addSong(songData);
     if (response.name !== null) {
       // Show success toast on successful addition
       addToast(`Song ${response.name} has been successfully added`);
-      // Update song list (if required)
-      //props.getSongList();
+      
       // Reset the form and state variables
       Form.reset();
       handleResetForm();
@@ -145,12 +150,13 @@ function AddSongForm(props) {
     setArtists([]);
     setArtistInput('');
     setIsFormSubmitted(false);
+    setImageFile(null);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <VStack spacing="30px" width="350px">
+    <form onSubmit={handleSubmit} >
+        <VStack spacing="30px" width = "100%" maxW = "400px">
           {/* Form control for song name */}
           <FormControl isRequired>
             <FormLabel color="white">Name</FormLabel>
@@ -239,6 +245,42 @@ function AddSongForm(props) {
               <FormErrorMessage color="white">Please fill out this field.</FormErrorMessage>
             )}
           </FormControl>
+          <FormControl>
+          <FormLabel color="white">Image (png, jpg, jpeg)</FormLabel>
+          <Box
+            position="relative"
+            overflow="hidden"
+            cursor="pointer"
+            borderRadius="md"
+            borderColor="teal.100"
+            borderWidth="2px"
+            p="2px"
+          >
+            <Input
+              color="white"
+              type="file"
+              id="image"
+              name="image"
+              accept=".png, .jpg, .jpeg"
+              onChange={(e) => setImageFile(e.target.files[0])}
+              opacity="0" // Hide the original input
+              position="absolute"
+              top="0"
+              left="0"
+              zIndex="1"
+            />
+            <Button as="label" htmlFor="image" colorScheme="teal" size = "sm">
+              Select Image
+            </Button>
+            {imageFile && (
+              <Box p="4px" mt="2" bgColor="#000C66" borderRadius="md" color = "white">
+                <span>{imageFile.name}</span>
+                <CloseButton size="sm" pt="1px" color="white" onClick={(e) => setImageFile(e.target.files[0])} />
+              </Box>
+            )}
+          </Box>
+          {isFormSubmitted && !imageFile && <FormErrorMessage color="white">Please select an image.</FormErrorMessage>}
+        </FormControl>
           {/* Submit button */}
           <Center>
             <Button colorScheme="teal" type="submit">
@@ -247,6 +289,7 @@ function AddSongForm(props) {
           </Center>
         </VStack>
       </form>
+      
       {/* Confirmation dialog */}
       <AlertDialog isOpen={isAlertOpen} onClose={handleCancelAction}>
         <AlertDialogOverlay />
@@ -270,3 +313,17 @@ function AddSongForm(props) {
 }
 
 export default AddSongForm;
+
+function convertToBase64(file)
+{
+  return new Promise ((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result)
+    };
+    fileReader.onerror = (error) =>{
+      reject(error);
+    } 
+  }) 
+}
