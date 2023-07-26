@@ -22,6 +22,8 @@ import SpotifyArtists from './pages/SpotifyIntegration/SpotifyArtists';
 import SpotifyRecentlyPlayed from './pages/SpotifyIntegration/SpotifyRecentlyPlayed';
 import SongForm from './pages/Admin/SongForm';
 import ChangePassword from './pages/Authentication/ChangePassword';
+import MyFavorites from './pages/Favorites/MyFavorites';
+import SongPage from './pages/Song/SongPage';
 
 const router = createBrowserRouter([
   {
@@ -34,27 +36,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/faq",
-        element: <FAQ/>
+        element: <FAQ />
       },
       {
         path: "/about-us",
         element: <AboutUs />
       },
       {
-        path:"/contact-us",
-        element: <ContactUs/>
+        path: "/contact-us",
+        element: <ContactUs />
       },
       {
-        path:"/quiz",
-        element: <Quiz/>
+        path: "/quiz",
+        element: <Quiz />
       },
       {
-        path:"/leaderboard",
-        element: <Leaderboard/>
+        path: "/leaderboard",
+        element: <Leaderboard />
       },
-       {
-        path:"/user/profile",
-        element: <ViewProfile/>
+      {
+        path: "/user/profile",
+        element: <ViewProfile />
       },
       {
         path: "/spotify",
@@ -78,7 +80,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/addSong",
-        element : <SongForm />
+        element: <SongForm />
+      },
+      {
+        path: "/my-favorites",
+        element: <MyFavorites />
+      },
+      {
+        path: "/song/:songID",
+        element: <SongPage />
       }
     ]
   },
@@ -90,15 +100,17 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
-         path: "/user/register",
-         element: <Register />
+        path: "/user/register",
+        element: <Register />
       },
       {
-           path: "/user/change-password",
-           element: <ChangePassword />
-            },
+        path: "/user/change-password",
+        element: <ChangePassword />
+      },
+
     ]
   }
+
 ]);
 
 function App() {

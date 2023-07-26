@@ -23,6 +23,9 @@ const userSchema = new mongoose.Schema({
   lastName: {
     type: String
   },
+  favouriteSongs:[{
+    type: String
+  }],
 }, { collection: 'User' });
 
 // Create the User model
