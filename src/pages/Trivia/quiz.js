@@ -1,13 +1,19 @@
-import { Flex, Heading, Button, Text, VStack, Image } from "@chakra-ui/react";
+import { Flex, Heading, Button, Text, VStack, Image, useToast } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import fetchQuizQuestions from "../../services/QuizService";
+import { useNavigate } from "react-router-dom";
+import fetchQuizQuestions from "../../services/TriviaServices/QuizService";
 import Trivia1SVG from "../../assets/trivia1.svg";
+import { submitScore } from "../../services/TriviaServices/LeaderboardServices";
 
 function Quiz() {
   const [questions, setQuestions] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
+  const [isQuizEnded, setIsQuizEnded] = useState(false);
+  const toast = useToast();
+  const navigate = useNavigate();
+  const userID = 1;
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -17,31 +23,66 @@ function Quiz() {
     fetchQuestions();
   }, []);
 
+  const showToast = (message, isSuccess) => {
+    toast({
+      title: message,
+      status: isSuccess ? "success" : "warning",
+      duration: 1500,
+      isClosable: true,
+      variant: isSuccess ? "subtle" : "solid",
+      bg: isSuccess ? "#1db954" : "",
+      color: isSuccess ? "white" : "",
+      position: "top",
+    });
+  };
+
   const handleStartQuiz = () => {
     setIsQuizStarted(true);
   };
 
-  const handleAnswerClick = (isCorrect) => {
-    // Update the score if the answer is correct
-    if (isCorrect) {
+  const handleAnswerClick = (selectedOption) => {
+    const correctAnswer = questions[currentQuestionIndex].answer;
+
+    if (selectedOption === correctAnswer) {
       setScore((prevScore) => prevScore + 1);
+      showToast("Correct answer!", true);
+    } else {
+      showToast("Wrong answer!", false);
     }
 
-    // Move to the next question
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-
-    // Reset the quiz when all questions are answered
-    if (currentQuestionIndex >= questions.length - 1) {
-      setIsQuizStarted(false);
-      setCurrentQuestionIndex(0);
-      setScore(0);
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    } else {
+      setIsQuizEnded(true);
+      submitScore(userID, score); // Submit the score to the backend
     }
+  };
+
+  const navigateToLeaderboard = () => {
+    navigate("/leaderboard");
   };
 
   return (
     questions ? (
       <Flex justifyContent="start" minH="90vh" backgroundColor="#000C66" w="100%" flexDirection="column" alignItems="center">
-        {!isQuizStarted && (
+        {!isQuizEnded ? isQuizStarted ? (
+          <VStack spacing="4" direction="column" align="start" color="white" mt="64px" mb="32px">
+            <Heading>{questions[currentQuestionIndex].question}</Heading>
+            {["option1", "option2", "option3", "option4"].map((option, index) => (
+              <Button
+                key={index}
+                onClick={() => handleAnswerClick(questions[currentQuestionIndex][option])}
+                colorScheme="blue"
+                size="md"
+                width="60%"
+                textAlign="center"
+                alignSelf="center"
+              >
+                {questions[currentQuestionIndex][option]}
+              </Button>
+            ))}
+          </VStack>
+        ) : (
           <>
             <Image src={Trivia1SVG} alt="Animated Woman with Power" boxSize="45vh" />
             <Heading as="h1" size="2xl" color="white" mt="64px" mb="32px">
@@ -51,31 +92,19 @@ function Quiz() {
               Start Trivia
             </Button>
           </>
-        )}
-        {isQuizStarted && questions.length > 0 && currentQuestionIndex < questions.length && (
-          <VStack spacing="4" align="start" color="white" mt="32px">
-            {/* <Text fontSize="xl" fontWeight="medium">
-              Question {currentQuestionIndex + 1} of 5:
-            </Text> */}
-            <Text>{questions[currentQuestionIndex].question}</Text>
-            {["option1", "option2", "option3", "option4"].map((option, index) => (
-              <Button
-                key={index}
-                onClick={() => handleAnswerClick(questions[currentQuestionIndex][option].isCorrect)}
-                colorScheme="blue"
-                size="lg"
-                width="100%"
-                textAlign="center"
-              >
-                {questions[currentQuestionIndex][option]}
-              </Button>
-            ))}
-          </VStack>
-        )}
-        {currentQuestionIndex === questions.length && (
-          <Text mt="32px" color="white">
-            Quiz completed! Your score: {score} out of 5
-          </Text>
+        ) : (
+          <Flex direction="column" alignItems="center" width="100%">
+            <Heading as="h1" size="xl" color="white" mt="64px" mb="32px">
+              Quiz completed! <br /> Your score: {score} / 5
+            </Heading>
+            <Button onClick={async () => {
+              // When the user clicks the "Leaderboard" button,
+              // call the submitScore function to send the score to the backend
+              navigateToLeaderboard();
+            }} colorScheme="blue" size="lg">
+              Leaderboard
+            </Button>
+          </Flex>
         )}
       </Flex>
     ) : null

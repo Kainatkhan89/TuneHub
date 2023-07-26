@@ -1,7 +1,9 @@
 import { Box, Flex, Image, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import LeaderboardSVG from '../../assets/learderboard.svg';
-import fetchLeaderboardData from '../../services/LeaderboardServices';
+// Leaderboard.js
+import { fetchLeaderboardData, submitScore } from '../../services/TriviaServices/LeaderboardServices';
+
 
 function Leaderboard() {
     const [leaderboardData, setLeaderboardData] = useState([]);
