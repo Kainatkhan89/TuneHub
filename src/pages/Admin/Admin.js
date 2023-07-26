@@ -33,7 +33,7 @@ function AdminPage() {
     }
 
     useEffect(() => {
-        // Fetch data from the API on localhost:5000
+        // Fetch data from the API on localhost:8080
         getSongList();
     }, []);
 
