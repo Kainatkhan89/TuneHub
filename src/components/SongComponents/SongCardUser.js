@@ -13,9 +13,11 @@ import { useState } from 'react';
 import image1 from '../../assets/image1.jpg';
 import { deleteSong } from '../../services/AdminServices/AdminServices.js'
 
-function SongOverviewBox(props) {
+function SongCardUser(props) {
 
-    const responsiveText = { base: '12px', md: '14px', lg: '18px' };
+    const responsiveHeadText = { base: '12px', md: '16px' };
+    const responsiveBodyText = { base: '10px', md: '14px' };
+    const responsiveIcon = { base: '4', md: '5' };
 
     const [isAlertOpen, setIsAlertOpen] = useState(false);
     // Function to determine if the image is an SVG
@@ -24,6 +26,7 @@ function SongOverviewBox(props) {
     };
 
     const { id, name, artist, duration } = props;
+    const formattedArtists = Array.isArray(artist) ? artist.join(', ') : artist;
     //console.log("id", id);
     return (
         <>
@@ -40,13 +43,13 @@ function SongOverviewBox(props) {
                                 <Image src={image1} alt="Song Image" maxHeight="100%" maxWidth="100%" objectFit="cover" />
                             )}
                         </Box>
-                        <Flex flexDirection="column" ml="24px" justifyContent="space-between">
-                            <Text fontSize="md" color="white" fontWeight="medium">{name}</Text>
-                            <Text fontSize="md" color="white" fontWeight="medium">{artist}</Text>
+                        <Flex flexDirection="column" ml="24px" justifyContent="space-between" flexWrap="wrap">
+                            <Text fontSize= {responsiveHeadText} color="white" fontWeight="medium">{name}</Text>
+                            <Text fontSize= {responsiveBodyText} color="white" fontWeight="medium">{formattedArtists}</Text>
                         </Flex>
                     </Flex>
                     <Flex justifyContent="center" alignItems="center" pr="16px">
-                        <Text fontSize="md" color="white" fontWeight="medium">{duration}</Text>
+                        <Text fontSize= {responsiveBodyText} color="white" fontWeight="medium">{duration}</Text>
                     </Flex>
                 </Flex>
             </NavLink>
@@ -60,4 +63,4 @@ function SongOverviewBox(props) {
 
 }
 
-export default SongOverviewBox;
+export default SongCardUser;

@@ -13,6 +13,7 @@ const quizRoute = require('./routes/quiz.js')
 const leaderboard = require('./routes/leaderboard');
 const userRoute = require('./routes/users.js');
 const artistRoute = require('./routes/artist.js');
+const genreRoute = require('./routes/genre.js');
 
 const app = express();
 dotenv.config();
@@ -63,6 +64,7 @@ app.use('/leaderboard',leaderboard);
 app.use('/artist', artistRoute);
 app.use('/users',userRoute);
 app.use('/trivia',quizRoute);
+app.use('/genre', genreRoute);
 //Server PORT number
 
 
