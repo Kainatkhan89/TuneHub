@@ -22,38 +22,23 @@ import ErrorMessage from '../../components/Messages/ErrorMessage';
 
 export default function Login()
 {
-const navigate = useNavigate();
+    const navigate = useNavigate();
    const CFaUserAlt = chakra(FaUserAlt);
    const CFaLock = chakra(FaLock);
    const [showPassword, setShowPassword] = useState(false);
    const handleShowClick = () => setShowPassword(!showPassword);
-   // --handle submit
-   const [email, setEmail] = useState('dev2104patel@gmail.com');
-   const [password, setPassword] = useState('password123');
+
+   const [email, setEmail] = useState('');
+   const [password, setPassword] = useState('');
    const [error, setError] = useState('');
    const [isLoading, setIsLoading] = useState(false);
-   /*const handleSubmit = async event => {
-     event.preventDefault();
-     setIsLoading(true);
-     try {
-      // await userLogin({ email, password });
-       setIsLoading(false);
-       setShowPassword(false);
-       navigate('/user/profile')  //, {state:{firstname:"firstname",lastname:"lastname",email:email}}
-     } catch (error) {
-       setError('Invalid username or password');
-       setIsLoading(false);
-       setEmail('');
-       setPassword('');
-       setShowPassword(false);
-     }
-   };*/
-   const handleSubmit = async event => {
-     event.preventDefault();
-     setIsLoading(true);
 
+   const handleSubmit = async (event) => {
+     event.preventDefault();
+     setIsLoading(true);
      try {
-       const response = await fetch('/users/login', {
+       // Fetch the latest response by using await before each API call
+       const loginResponse = await fetch('http://localhost:5000/users/login', {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',
@@ -61,29 +46,35 @@ const navigate = useNavigate();
          body: JSON.stringify({ email, password }),
        });
 
-       const data = await response.json();
-
-       if (!response.ok) {
-         // If the API returns an error status, set the error message accordingly.
+       const data = await loginResponse.json();
+       if (!loginResponse.ok) {
          setError(data.message || 'Something went wrong.');
-         setIsLoading(false);
-         setEmail('');
-         setPassword('');
-         setShowPassword(false);
        } else {
-         // API call successful, handle the response or redirect to the profile page.
-         setIsLoading(false);
-         setShowPassword(false);
-         navigate('/user/profile'); // Redirect to the profile page
+         // API call successful
+         const userData = JSON.stringify(data.user);
+         setCookie("id", data.user.id, 7);
+         localStorage.setItem('user', userData);
+         navigate('/user/profile', { state: { user: data.user } });
        }
      } catch (error) {
        setError('Error fetching user. Something went wrong.');
+     } finally {
        setIsLoading(false);
-       setEmail('');
-       setPassword('');
-       setShowPassword(false);
      }
    };
+
+// Function to set a cookie with a given name, value, and expiration date
+function setCookie(name, value, daysToExpire) {
+  const date = new Date();
+  date.setTime(date.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value};${expires};path=/`;
+}
+
+// Example usage
+ // Save the username for 7 days
+
+
    const handleClick = (e) => {
        e.preventDefault();
        navigate('/user/register');
