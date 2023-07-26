@@ -1,35 +1,32 @@
 // Function to fetch artist information by ID
 export const fetchArtistById = async (id) => {
 
-    try { 
-        const response = await fetch(`http://localhost:5000/artist/${id}`);
+    try {
+        const response = await fetch(`http://localhost:8080/artist/${id}`);
 
         const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error fetching artist:', error);
-        return null;   
+        return null;
     }
 };
 
 export const getAllSongs = async () => {
-    try
-    {
-        const response = await fetch('http://localhost:5000/songs');
+    try {
+        const response = await fetch('http://localhost:8080/songs');
         const data = await response.json();
         return data;
     }
-    catch(error)
-    {
+    catch (error) {
         console.error('Error fetching songs');
         return null;
     }
-        
+
 };
 
 export const deleteSong = async (id) => {
-    try
-    {
+    try {
         const deleteOptions = {
             method: 'DELETE',
             headers: {
@@ -37,20 +34,18 @@ export const deleteSong = async (id) => {
             }
         }
 
-        const response = await fetch(`http://localhost:5000/delete/song/${id}`, deleteOptions);
+        const response = await fetch(`http://localhost:8080/delete/song/${id}`, deleteOptions);
         const data = await response.json();
         return data;
     }
-    catch(error)
-    {
+    catch (error) {
         console.error('Error fetching songs');
         return null;
     }
 }
 
 export const addSong = async (songData) => {
-    try
-    {
+    try {
         const postOptions = {
             method: 'POST',
             headers: {
@@ -59,12 +54,11 @@ export const addSong = async (songData) => {
             body: JSON.stringify(songData)
         }
 
-        const response = await fetch(`http://localhost:5000/add/song`, postOptions);
+        const response = await fetch(`http://localhost:8080/add/song`, postOptions);
         const data = await response.json();
         return data;
     }
-    catch(error)
-    {
+    catch (error) {
         console.error('Error while adding songs');
         return null;
     }

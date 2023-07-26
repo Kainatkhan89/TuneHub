@@ -15,7 +15,7 @@ const getLocalRefreshToken = () => window.localStorage.getItem('spotify_refresh_
 // Refresh the token
 const refreshAccessToken = async () => {
   try {
-    const response = await fetch(`http://localhost:5000/spotify/refresh_token?refresh_token=${getLocalRefreshToken()}`);
+    const response = await fetch(`http://localhost:8080/spotify/refresh_token?refresh_token=${getLocalRefreshToken()}`);
     const data = await response.json();
     const { access_token } = data;
     setLocalAccessToken(access_token);
@@ -182,26 +182,25 @@ export const getTrack = trackId =>
     headers: getHeadersWithToken(),
   });
 
-  export const getUserInfo = async () => {
-    try {
-      const [userData, followedArtistsData, playlistsData, topArtistsData, topTracksData] = await Promise.all([
-        getUser(),
-        getFollowing(),
-        getPlaylists(),
-        getTopArtistsLong(),
-        getTopTracksLong()
-      ]);
-  
-      return {
-        user: userData,
-        followedArtists: followedArtistsData,
-        playlists: playlistsData,
-        topArtists: topArtistsData,
-        topTracks: topTracksData,
-      };
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  };
-  
+export const getUserInfo = async () => {
+  try {
+    const [userData, followedArtistsData, playlistsData, topArtistsData, topTracksData] = await Promise.all([
+      getUser(),
+      getFollowing(),
+      getPlaylists(),
+      getTopArtistsLong(),
+      getTopTracksLong()
+    ]);
+
+    return {
+      user: userData,
+      followedArtists: followedArtistsData,
+      playlists: playlistsData,
+      topArtists: topArtistsData,
+      topTracks: topTracksData,
+    };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
