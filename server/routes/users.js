@@ -1,3 +1,6 @@
+// Author: Kainat Khan
+// Date: July 24, 2023
+
 const express = require('express');
 
 const userController = require('../controllers/users.js');
