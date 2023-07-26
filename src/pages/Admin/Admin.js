@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import LeftSidePanel from '../../components/AdminComponent/AdminSidePanel.js';
-import SongOverviewBox from '../../components/SongComponents/SongOverviewBox.js';
+import SongOverviewBox from '../../components/SongComponents/SongCardAdmin.js';
 import { getAllSongs } from '../../services/AdminServices/AdminServices';
 
 function LoadList({ songList, getSongList }) {

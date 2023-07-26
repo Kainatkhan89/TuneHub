@@ -21,6 +21,7 @@ import SpotifyTopSongs from './pages/SpotifyIntegration/SpotifyTopSongs';
 import SpotifyArtists from './pages/SpotifyIntegration/SpotifyArtists';
 import SpotifyRecentlyPlayed from './pages/SpotifyIntegration/SpotifyRecentlyPlayed';
 import SongForm from './pages/Admin/SongForm';
+import Search from './pages/Search/SearchSong';
 import ChangePassword from './pages/Authentication/ChangePassword';
 
 const router = createBrowserRouter([
@@ -79,7 +80,15 @@ const router = createBrowserRouter([
       {
         path: "/admin/addSong",
         element : <SongForm />
-      }
+      },
+      {
+        path: "/search/song",
+        element : <Search/>
+      },
+      // {
+      //   path : "/search/artist",
+      //   element :<>,
+      // }
     ]
   },
   {
