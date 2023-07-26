@@ -8,16 +8,19 @@ import {
   Heading,
   Input,
   InputGroup,
+  InputLeftElement,
   InputRightElement,
   Stack,
   Text
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { FaLock } from "react-icons/fa";
 
 export default function ChangePassword() {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowClick = () => setShowPassword(!showPassword);
 
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,23 +38,41 @@ export default function ChangePassword() {
         return;
        } else
         if (password !== cpassword) {
-          setErrorMessage("New password and confirm password do not match.")
+          setErrorMessage("New password and confirm password do not match.");
+          setTimeout(() => {setErrorMessage(null);}, 3000);
           setSuccessMessage("");
           setIsLoading(false);
           setShowPassword(false);
 
           } else{
-           // Simulate a change password request
-                // Replace this with your actual API call to change the password
-                setTimeout(() => {
-                  setIsLoading(false);
-                  setShowPassword(false);
+               try {
+                const response = await fetch(`http://localhost:5000/users/changePassword/${email}`, {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ password }),
+                });
+
+                if (response.ok) {
                   setSuccessMessage("Password changed successfully!");
-                   setErrorMessage("");
+                  setTimeout(() => {setSuccessMessage(null);}, 3000);
+                  setErrorMessage("");
                   setPassword("");
                   setCPassword("");
-                }, 1500);
-          }
+                } else {
+                  setErrorMessage("Failed to change password. Please try again.");
+                  setTimeout(() => {setErrorMessage(null);}, 3000);
+                  setSuccessMessage("");
+                }
+              } catch (error) {
+                setErrorMessage("An error occurred. Please try again later.");
+                setTimeout(() => {setErrorMessage(null);}, 3000);
+                setSuccessMessage("");
+              }
+                  setIsLoading(false);
+                  setShowPassword(false);
+              }
     };
 
   return (
@@ -73,6 +94,14 @@ export default function ChangePassword() {
                   {errorMessage}
                 </Text>
               )}
+              <FormControl isRequired>
+              <FormLabel>Email Address</FormLabel>
+              <Input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </FormControl>
               <FormControl isRequired>
                 <FormLabel>New Password</FormLabel>
                 <InputGroup>
