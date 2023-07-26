@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from 'react-router-dom';
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -10,8 +9,9 @@ import {
   Input,
   Stack,
   Text,
-  chakra,
+  chakra
 } from "@chakra-ui/react";
+import React, { useState } from "react";
 
 export default function CustomerProfile() {
   const [successMessage, setSuccessMessage] = useState(null);

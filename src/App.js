@@ -11,10 +11,16 @@ import ContactUs from './pages/ContactUs/ContactUs';
 import AboutUs from './pages/ContactUs/AboutUs';
 import FAQ from './pages/FAQ/FAQ';
 import LandingPage from './pages/LandingPage/LandingPage';
+import AdminPage from './pages/Admin/Admin';
 import LayoutWithNav from './pages/Layout/LayoutWithNav';
 import LayoutWithoutNav from './pages/Layout/LayoutWithoutNav';
 import Quiz from './pages/Trivia/quiz';
 import Leaderboard from './pages/Trivia/Leaderboard';
+import SpotifyContainer from './pages/SpotifyIntegration/SpotifyContainer';
+import SpotifyTopSongs from './pages/SpotifyIntegration/SpotifyTopSongs';
+import SpotifyArtists from './pages/SpotifyIntegration/SpotifyArtists';
+import SpotifyRecentlyPlayed from './pages/SpotifyIntegration/SpotifyRecentlyPlayed';
+import SongForm from './pages/Admin/SongForm';
 import ChangePassword from './pages/Authentication/ChangePassword';
 
 const router = createBrowserRouter([
@@ -22,6 +28,7 @@ const router = createBrowserRouter([
     element: <LayoutWithNav />,
     children: [
       {
+        // Change this path back to the Admin page
         path: "/",
         element: <LandingPage />
       },
@@ -48,6 +55,30 @@ const router = createBrowserRouter([
        {
         path:"/user/profile",
         element: <ViewProfile/>
+      },
+      {
+        path: "/spotify",
+        element: <SpotifyContainer />
+      },
+      {
+        path: "/spotify/top-songs",
+        element: <SpotifyTopSongs />
+      },
+      {
+        path: "/spotify/top-artists",
+        element: <SpotifyArtists />
+      },
+      {
+        path: "/spotify/recently-played",
+        element: <SpotifyRecentlyPlayed />
+      },
+      {
+        path: "/admin",
+        element: <AdminPage />
+      },
+      {
+        path: "/admin/addSong",
+        element : <SongForm />
       }
     ]
   },

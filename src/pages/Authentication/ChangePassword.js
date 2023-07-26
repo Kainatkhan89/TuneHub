@@ -11,11 +11,10 @@ import {
   InputLeftElement,
   InputRightElement,
   Stack,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaLock } from "react-icons/fa";
-//import axios from "axios";
 
 export default function ChangePassword() {
   const [showPassword, setShowPassword] = useState(false);
