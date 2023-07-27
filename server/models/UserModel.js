@@ -7,9 +7,9 @@ const userSchema = new mongoose.Schema({
   id: {
     type: String
   },
-    email: {
-      type: String
-    },
+  email: {
+    type: String
+  },
   password: {
     type: String
   },
@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   lastName: {
     type: String
   },
-  favoriteSongs:[{
+  favoriteSongs: [{
     type: String
   }],
 }, { collection: 'User' });
