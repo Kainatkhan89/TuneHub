@@ -68,6 +68,7 @@ import {
       const allSongs = await getAllSongs();
       setSongList(allSongs);
       setChangedData(allSongs);
+      setFilteredData(allSongs);
     };
   
     // Function to fetch all genres from the API and set initial state
