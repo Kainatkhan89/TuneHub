@@ -1,6 +1,6 @@
 // Author: Kainat Khan
 // Date: July 24, 2023
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -12,8 +12,7 @@ import {
   Heading,
   Input,
   Stack,
-  Text,
-  chakra
+  Text
 } from "@chakra-ui/react";
 
 export default function CustomerProfile() {
