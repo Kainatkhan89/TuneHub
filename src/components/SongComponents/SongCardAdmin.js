@@ -13,7 +13,7 @@ import {
     useToast
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import image1 from '../../assets/image1.jpg';
+import image1 from '../../assets/headphone.png';
 import { deleteSong } from '../../services/AdminServices/AdminServices.js';
 
 function SongOverviewBox(props) {
@@ -29,7 +29,7 @@ function SongOverviewBox(props) {
         return url.toLowerCase().endsWith('.svg');
     };
 
-    const { id, name, artist, duration } = props;
+    const { id, name, artist, image, duration } = props;
 
     //const [artists, setArtists] = useState([]);
 
@@ -106,7 +106,7 @@ function SongOverviewBox(props) {
                                 <image width="100%" height="100%" href={image1} />
                             </svg>) : (
                             // Render JPG image if it is a JPG image
-                            <Image src={image1} alt="Song Image" maxHeight="100%" maxWidth="100%" objectFit="cover" />
+                            <Image src={image ?? image1} alt="Song Image" maxHeight="100%" maxWidth="100%" objectFit="cover" />
                         )}
                     </Box>
                     <Flex flexDirection="column" ml="24px" justifyContent="space-between">

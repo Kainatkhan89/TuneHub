@@ -2,7 +2,7 @@
 
 export async function fetchLeaderboardData() {
     try {
-      const response = await fetch('http://localhost:5000/leaderboard');
+      const response = await fetch('http://localhost:8080/leaderboard');
       const data = await response.json();
       return data;
     } catch (error) {
@@ -13,7 +13,7 @@ export async function fetchLeaderboardData() {
   
   export async function submitScore(userID, rightAnswerScore) {
     try {
-      const response = await fetch('http://localhost:5000/leaderboard/edit', {
+      const response = await fetch('http://localhost:8080/leaderboard/edit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

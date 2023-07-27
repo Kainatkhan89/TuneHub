@@ -1,7 +1,7 @@
 export const getAllSongs = async () => {
     try
     {
-        const response = await fetch('http://localhost:5000/songs');
+        const response = await fetch('http://localhost:8080/songs');
         const data = await response.json();
         return data;
     }
@@ -16,7 +16,7 @@ export const getAllSongs = async () => {
 export const getAllGenres = async () => {
     try
     {
-        const response = await fetch('http://localhost:5000/genre');
+        const response = await fetch('http://localhost:8080/genre');
         const data = await response.json();
         return data;
     }
