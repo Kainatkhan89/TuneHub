@@ -1,6 +1,6 @@
 // Author: Kainat Khan
 // Date: July 24, 2023
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -12,8 +12,7 @@ import {
   Heading,
   Input,
   Stack,
-  Text,
-  chakra
+  Text
 } from "@chakra-ui/react";
 
 export default function CustomerProfile() {
@@ -167,7 +166,7 @@ export default function CustomerProfile() {
         alignItems="center"
       >
         <Heading as="h1" fontSize="4xl" color="whiteAlpha.900" fontWeight="medium" mt="16px">
-          Customer Profile
+          User Profile
         </Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form >

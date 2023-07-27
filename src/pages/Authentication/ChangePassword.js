@@ -1,5 +1,3 @@
-// Author: Kainat Khan
-// Date: July 24, 2023
 import {
   Box,
   Button,
@@ -10,13 +8,11 @@ import {
   Heading,
   Input,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
   Stack,
   Text
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { FaLock } from "react-icons/fa";
 
 export default function ChangePassword() {
   const [showPassword, setShowPassword] = useState(false);

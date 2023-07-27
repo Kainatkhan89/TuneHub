@@ -45,6 +45,11 @@ function NavBar() {
                       <Text fontWeight="medium" color="white" >My Spotify</Text>
                     </NavLink>
                   </Box>
+                  <Box>
+                    <NavLink to='/my-favorites' onClick={onClose}>
+                      <Text fontWeight="medium" color="white" >My Favorites</Text>
+                    </NavLink>
+                  </Box>
                   {/* About Us */}
                   <Box>
                     <NavLink to='/about-us' onClick={onClose}>
@@ -86,6 +91,21 @@ function NavBar() {
           <Box>
             <NavLink to='/spotify'>
               <Text fontWeight="medium" color="white" fontSize="lg">My Spotify</Text>
+            </NavLink>
+          </Box>
+          <Box>
+            <NavLink to='/my-favorites'>
+              <Text fontWeight="medium" color="white" fontSize="lg">My Favorites</Text>
+            </NavLink>
+          </Box>
+          <Box>
+            <NavLink to='/trivia'>
+              <Text fontWeight="medium" color="white" fontSize="lg">Trivia</Text>
+            </NavLink>
+          </Box>
+          <Box>
+            <NavLink to='/search/song'>
+              <Text fontWeight="medium" color="white" fontSize="lg">Search songs</Text>
             </NavLink>
           </Box>
           {/* About Us */}

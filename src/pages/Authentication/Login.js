@@ -1,5 +1,3 @@
-// Author: Kainat Khan
-// Date: July 24, 2023
 import {
   Box,
   Button,
@@ -54,6 +52,7 @@ export default function Login() {
         // API call successful
         const userData = JSON.stringify(data.user);
         setCookie("id", data.user.id, 7);
+        localStorage.setItem('id',"Bearer "+ data.user.id);
         localStorage.setItem('user', userData);
         navigate('/user/profile', { state: { user: data.user } });
       }
