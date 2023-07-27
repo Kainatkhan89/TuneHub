@@ -108,7 +108,8 @@ function SongOverviewBox(props) {
             {duration}
           </Text>
           {/* DeleteIcon with confirmation dialog */}
-          <Icon as={DeleteIcon} _hover={{ bg: '#050A30', color: 'red.900' }} ml="4px" color="red.500" boxSize={responsiveIcon} onClick={() => setIsAlertOpen(true)} />
+          <Icon as={DeleteIcon} _hover={{ bg: '#050A30', color: 'red.900' }} ml="4px" color="red.500" boxSize={responsiveIcon} 
+          onMouseDown={(e) => { setIsAlertOpen(true)}} />
         </Flex>
       </Flex>
       </NavLink>
