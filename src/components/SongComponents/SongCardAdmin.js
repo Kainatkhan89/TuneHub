@@ -17,6 +17,7 @@ import {
 import React, { useState } from 'react';
 import image1 from '../../assets/headphone.png';
 import { deleteSong } from '../../services/AdminServices/AdminServices.js';
+import { NavLink } from "react-router-dom";
 
 function SongOverviewBox(props) {
   // Define responsive styles for the component
@@ -80,6 +81,7 @@ function SongOverviewBox(props) {
 
   return (
     <>
+      <NavLink to={"/song/" + id}>
       <Flex width="100%" justifyContent="space-between" background="#050A30" maxH="100px" borderRadius="10px">
         <Flex p="16px">
           <Box maxH="100%" overflow="hidden">
@@ -109,6 +111,9 @@ function SongOverviewBox(props) {
           <Icon as={DeleteIcon} _hover={{ bg: '#050A30', color: 'red.900' }} ml="4px" color="red.500" boxSize={responsiveIcon} onClick={() => setIsAlertOpen(true)} />
         </Flex>
       </Flex>
+      </NavLink>
+      
+ 
       {/* Confirmation dialog */}
       <AlertDialog isOpen={isAlertOpen} onClose={handleCancelAction}>
         <AlertDialogOverlay />
@@ -127,6 +132,7 @@ function SongOverviewBox(props) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      
     </>
   );
 }
