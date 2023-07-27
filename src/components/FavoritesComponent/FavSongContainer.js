@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import image1 from '../../assets/image1.jpg';
+import image1 from '../../assets/headphone.png';
 
 function FavSongContainer(props) {
 
