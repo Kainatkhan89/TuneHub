@@ -15,12 +15,11 @@ function LeftSidePanel({ selectedTab }) {
         orientation="horizontal"
         backgroundColor="#050A30"
         w="100%"
-        pt="12px"
         pr="0px"
         variant="unstyled"
         justifyContent="center"
       >
-        <TabList gap="8px" mt="8px">
+        <TabList  gap = "8px">
           {/* NavLink for the "Songs" tab */}
           <NavLink to="/admin">
             <Tab color="white" width="16vw" _selected={{ bg: 'teal', color: 'white', borderRadius: '4px' }}>
@@ -34,7 +33,7 @@ function LeftSidePanel({ selectedTab }) {
             </Tab>
           </NavLink>
           <NavLink to = "/admin/addArtist">
-            <Tab color="white" width="11vw" _selected={{ bg: 'teal', color: 'white', borderRadius: '4px' }}>
+            <Tab color="white" width="16vw" _selected={{ bg: 'teal', color: 'white', borderRadius: '4px' }}>
               Add Artist
             </Tab>
           </NavLink>

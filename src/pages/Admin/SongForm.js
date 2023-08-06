@@ -13,7 +13,7 @@ import {
       <>
         {/* Render different layouts based on the screen size */}
         {isMobile ? (
-          <Flex p={0} backgroundColor="#000C66" minW="100vw" direction="column">
+          <Flex p={0} backgroundColor="#000C66" minW="100vw" minH = "90vh" direction="column">
             {/* Set padding to 0 and overflow to hidden */}
             <Flex>
               <LeftSidePanel selectedTab={tabIndex} />
@@ -21,7 +21,7 @@ import {
             <Center>
               <Flex
                 backgroundColor="#050A30"
-                mt="32px"
+                mt="72px"
                 borderRadius="10px"
                 maxW="350px"
                 width="100%"
