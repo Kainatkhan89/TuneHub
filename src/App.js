@@ -25,6 +25,7 @@ import Search from './pages/Search/SearchSong';
 import ChangePassword from './pages/Authentication/ChangePassword';
 import MyFavorites from './pages/Favorites/MyFavorites';
 import SongPage from './pages/Song/SongPage';
+import AddReview from './pages/Song/AddReview';
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
         path: "/search/song",
         element : <Search/>
       },
+      {
+        path: "/song/:songID/add-review",
+        element: <AddReview/>
+      }
       // {
       //   path : "/search/artist",
       //   element :<>,
