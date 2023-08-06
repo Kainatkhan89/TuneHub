@@ -33,6 +33,11 @@ function LeftSidePanel({ selectedTab }) {
               Add Song
             </Tab>
           </NavLink>
+          <NavLink to = "/admin/addArtist">
+            <Tab color="white" width="11vw" _selected={{ bg: 'teal', color: 'white', borderRadius: '4px' }}>
+              Add Artist
+            </Tab>
+          </NavLink>
         </TabList>
       </Tabs>
     ) : (
@@ -57,6 +62,11 @@ function LeftSidePanel({ selectedTab }) {
           <NavLink to="/admin/addSong">
             <Tab color="white" width="11vw" _selected={{ bg: 'teal', color: 'white', borderRadius: '4px' }}>
               Add Song
+            </Tab>
+          </NavLink>
+          <NavLink to = "/admin/addArtist">
+            <Tab color="white" width="11vw" _selected={{ bg: 'teal', color: 'white', borderRadius: '4px' }}>
+              Add Artist
             </Tab>
           </NavLink>
         </TabList>

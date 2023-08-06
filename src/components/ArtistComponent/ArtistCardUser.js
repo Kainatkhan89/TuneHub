@@ -19,9 +19,8 @@ import {
     };
   
     // Destructure props to extract song data
-    const { id, name, genre } = props;
+    const { id, name, genre, image } = props;
     const formattedGenres = Array.isArray(genre) ? genre.join(', ') : genre;
-  
     return (
       <>
         {/* NavLink to navigate to the song page when clicked */}
@@ -35,7 +34,7 @@ import {
                     <image width="100%" height="100%" href={image1} />
                   </svg>
                 ) : (
-                  <Image src={image ?? image1} alt="Song Image" maxHeight="100%" maxWidth="100%" objectFit="cover" />
+                  <Image src={ image ?? image1} alt="Artist Image" maxHeight="100%" maxWidth="100%" objectFit="cover" />
                 )}
               </Box>
               <Flex flexDirection="column" ml="24px" justifyContent="space-between" flexWrap="wrap">
@@ -48,9 +47,9 @@ import {
               </Flex>
             </Flex>
             <Flex justifyContent="center" alignItems="center" pr="16px">
-              <Text fontSize={responsiveBodyText} color="white" fontWeight="medium">
+              {/* <Text fontSize={responsiveBodyText} color="white" fontWeight="medium">
                 {duration}
-              </Text>
+              </Text> */}
             </Flex>
           </Flex>
         </NavLink>
