@@ -54,7 +54,7 @@ export default function Login() {
         setCookie("id", data.user.id, 7);
         // localStorage.setItem('id',"Bearer "+ data.user.id);
         localStorage.setItem('user', userData);
-        navigate('/user/profile', { state: { user: data.user } });
+        navigate('/', { state: { user: data.user } });
       }
     } catch (error) {
       setError('Error fetching user. Something went wrong.');
