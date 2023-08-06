@@ -2,15 +2,21 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, IconButton, Text, VStack, useDisclosure, Image } from '@chakra-ui/react';
 import React from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/tunehub.svg';
 
 
 function NavBar() {
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const userid = window.localStorage.getItem('id');
+  const user = localStorage.getItem("user");
+  const navigate = useNavigate();
 
+
+  const handleLogOut = () => {
+    localStorage.setItem("user", "");
+    navigate("/");
+  };
 
   return (
     isMobile ?
@@ -139,9 +145,9 @@ function NavBar() {
             </NavLink>
           </Box>
           {/* CTA */}
-          {userid ? <NavLink to='/user/login'>
+          {user ? <Button onClick={handleLogOut} fontWeight="medium" colorScheme="teal" variant="solid" fontSize="lg">Log Out</Button> : <NavLink to='/user/login'>
             <Button fontWeight="medium" colorScheme="teal" variant="solid" fontSize="lg">Sign In/Up</Button>
-          </NavLink> : null}
+          </NavLink>}
         </HStack>
       </Flex>
   );
