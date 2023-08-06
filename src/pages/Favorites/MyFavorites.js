@@ -6,7 +6,7 @@ import { getFavorites } from '../../services/FavoritesService/FavoritesService';
 
 
 function MyFavorites() {
-    const [favorites, setFavorites] = useState(null);
+    const [favorites, setFavorites] = useState([]);
     const isMobile = useMediaQuery({ query: '(max-width: 1080px)' });
     const userid = window.localStorage.getItem("userid") ?? "1";
 
@@ -21,12 +21,12 @@ function MyFavorites() {
 
     return (
         isMobile ?
-            favorites ?
+            favorites  ?
                 <Flex w="100%" backgroundColor="#000C66" minHeight="90vh" flexDirection="column" alignItems="center">
                     <Heading fontSize="2xl" fontWeight="medium" color="white" mt="24px">My favorites</Heading>
                     <Flex w="90%" flexDirection="column" mt="24px" gap="16px">
                         {
-                            favorites?.map((song, ind) => {
+                            favorites.map((song, ind) => {
                                 return <FavSongContainer key={ind} {...song} />
                             })
                         }
