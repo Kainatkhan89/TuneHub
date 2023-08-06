@@ -1,5 +1,3 @@
-// Author: Kainat Khan
-// Date: July 24, 2023
 import {
   Box,
   Button,

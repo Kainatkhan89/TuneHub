@@ -166,7 +166,7 @@ export default function CustomerProfile() {
         alignItems="center"
       >
         <Heading as="h1" fontSize="4xl" color="whiteAlpha.900" fontWeight="medium" mt="16px">
-          Customer Profile
+          User Profile
         </Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form >
