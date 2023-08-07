@@ -143,7 +143,7 @@ exports.getReviews = async (req, res) => {
         }
 
         // Return the reviews for the specified song
-        return res.status(200).json({ reviews: songToGetReviews.reviews });
+        return res.status(200).json(songToGetReviews.reviews);
     } catch (error) {
         // Handling errors and returning a 500 status with an error message
         return res.status(500).json({ error: "Failed to get the reviews" });
