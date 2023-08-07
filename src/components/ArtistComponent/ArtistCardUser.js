@@ -19,7 +19,7 @@ import {
     };
   
     // Destructure props to extract song data
-    const { id, name, genre, image } = props;
+    const { name, genre, image } = props;
     const formattedGenres = Array.isArray(genre) ? genre.join(', ') : genre;
     return (
       <>

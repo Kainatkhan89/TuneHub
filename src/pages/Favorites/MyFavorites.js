@@ -9,6 +9,7 @@ function MyFavorites() {
     const [favorites, setFavorites] = useState([]);
     const isMobile = useMediaQuery({ query: '(max-width: 1080px)' });
     // const [userid, setUserID] = useState("1");
+    
     const userid = JSON.parse(localStorage.getItem("user")).id;
 
 

@@ -13,12 +13,15 @@ import {
   InputRightElement,
   Stack,
   Text,
+  Image,
   chakra
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import ErrorMessage from '../../components/Messages/ErrorMessage';
+import Logo from '../../assets/tunehub.svg';
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -55,6 +58,7 @@ export default function Login() {
         // localStorage.setItem('id',"Bearer "+ data.user.id);
         localStorage.setItem('user', userData);
         navigate('/', { state: { user: data.user } });
+        window.location.reload();
       }
     } catch (error) {
       setError('Error fetching user. Something went wrong.');
@@ -92,7 +96,9 @@ export default function Login() {
         justifyContent="center"
         alignItems="center"
       >
-        <image src="" mx="auto"></image>
+        <NavLink to="/">
+          <Image src={Logo} alt="TuneHub" width="128px" mb="128px" />
+        </NavLink>
         <Heading as="h1" color="whiteAlpha.900">Login</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit}>
