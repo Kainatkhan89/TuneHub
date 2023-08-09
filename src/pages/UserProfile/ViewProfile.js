@@ -96,7 +96,7 @@ export default function CustomerProfile() {
         setTimeout(() => {
           setSuccessMessage(null);
         }, 3000);
-        const updatedUserData = await response.json();
+        await response.json();
         window.location.reload();
         setIsEditing(false);
       } else {
