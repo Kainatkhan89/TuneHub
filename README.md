@@ -4,15 +4,15 @@
 * *Date Created*: 08 August 2023
 * *Last Modification Date*: 08 August 2023
 * *Requirements URL*: <https://dal.brightspace.com/d2l/le/content/274269/viewContent/3608545/View>
-* *Git URL*: <https://git.cs.dal.ca/hppatel/csci-5709-grp-05>
-*  *Netlify Deployment URL*: <https://tune-hub.netlify.app/>
-*  *Render Deployment URL*: <https://tunehub-server.onrender.com>
+* *GitLab URL*: <https://git.cs.dal.ca/hppatel/csci-5709-grp-05>
+* *Netlify Deployment URL*: <https://tune-hub.netlify.app/>
+* *Render Deployment URL*: <https://tunehub-server.onrender.com>
 ## Authors
 
+* [Kainat Khan](Kainat@dal.ca) - *(Developer)*
 * [Harsh Pranav Patel](hr979846@dal.ca) - *(Developer)*
 * [Preeti Sharma](pr233584@dal.ca) - *(Developer)*
 * [Dev Patel](dev.patel@dal.ca) - *(Developer)*
-* [Kainat Khan](Kainat@dal.ca) - *(Developer)*
 * [Vishwa Pankajbhai Parmar](vs623903@dal.ca) - *(Developer)*
 
 ## Deployment
